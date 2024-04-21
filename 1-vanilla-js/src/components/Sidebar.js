@@ -42,7 +42,7 @@ export class Sidebar {
                 <!-- Sidebar logo -->
                 <div class="sidebar-logo">
                     <a href="/">
-                        <img src="./public/logo.svg" alt="">
+                        <img src="./public/logo.svg" alt="Home Page">
                     </a>
                 </div>
 
