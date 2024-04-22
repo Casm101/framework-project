@@ -1,0 +1,107 @@
+/* Genereic imports */
+@import "./reset.css";
+
+/* Component style imports */
+@import "./componentStyles/sidebar-styles.css";
+
+
+/* Global styling */
+html {
+    background: #1c1c1c;
+}
+
+body {
+    width: 100dvw;
+    height: 100dvh;
+}
+
+
+/* Render point styling */
+#render-page {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    width: calc(100dvw - 300px);
+    height: 100dvh;
+
+    margin-left: 300px;
+    padding: 2.5rem;
+}
+
+/* Page header */
+.page-header {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+
+    width: 100%;
+    font-size: 2rem;
+}
+
+.page-header .header-title {
+    color: #fff;
+}
+
+.page-header .header-sum {
+    color: #838383;
+}
+
+
+/* Content grid */
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+    grid-gap: 2rem;
+}
+
+.content-card {
+    width: 100%;
+
+    border-radius: .5rem;
+    border: 1px solid #292929;
+
+    overflow: hidden;
+    cursor: pointer;
+    transition: all .5s;
+}
+
+.content-card:hover {
+    border-color: #454545;
+}
+
+.content-card .cover {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    transition: all .5s;
+}
+
+.content-card:hover .cover {
+    transform: scale(1.05);
+}
+
+.content-card .overlay {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+
+    position: relative;
+
+    width: 100%;
+    padding: 8px 16px;
+
+    color: #fff;
+    background: #222222;
+
+    z-index: 100;
+}
+
+.content-card .overlay .overlay-tags {
+    opacity: .5;
+    font-size: .8rem;
+}
+
+.error-wrapper {
+    color: #fff;
+}
