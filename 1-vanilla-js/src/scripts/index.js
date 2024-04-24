@@ -1,6 +1,6 @@
 // Component imports
 import { Sidebar } from "../components/Sidebar.js";
-import { Page } from "../components/page.js";
+import { Page } from "../components/Page.js";
 
 // Page imports
 import { MoviesPage } from "../pages/Movies.js";
@@ -16,7 +16,7 @@ const sidebarLinks = [
         href: '/'
     },
     {
-        name: 'TV Seires',
+        name: 'TV Series',
         href: '/tv-series'
     },
     {
@@ -26,7 +26,7 @@ const sidebarLinks = [
     {
         name: 'Favourites',
         href: '/favourites'
-    },
+    }
 ];
 
 

@@ -1,3 +1,5 @@
+import { ContentCard } from "../components/ContentCard";
+
 /**
  * Movies page component
  */
