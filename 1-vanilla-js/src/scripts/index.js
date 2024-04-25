@@ -9,6 +9,19 @@ import { AnimePage } from "../pages/Anime.js";
 import { FavouritesPage } from "../pages/Favourites.js";
 import { Error404Page } from "../pages/Error404.js";
 
+// Util and hook imports
+import { EventEmmiter } from "../utils/EventEmitter.js";
+import { getValue, setValue } from "../hooks/stateHooks.js";
+import { useDebounce } from "../hooks/debounce.js";
+
+
+// Initialise event emitter
+window.getValue = getValue;
+window.setValue = setValue;
+window.em = new EventEmmiter();
+
+let test;
+
 // Sidebar links
 const sidebarLinks = [
     {
@@ -103,6 +116,13 @@ window.onload = () => {
 
     // Render page
     renderPage(window.location.pathname);
+
+    // Add search listener
+    document.querySelector('#test').addEventListener('keyup', useDebounce((e) => {
+        test = setValue('test', e.target.value);
+    }, 500));
+
+    em.on('setValue-test', (e) => console.log('Recieved new value: ', e))
 };
 
 /**
