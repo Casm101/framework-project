@@ -20,7 +20,7 @@ window.getValue = getValue;
 window.setValue = setValue;
 window.em = new EventEmmiter();
 
-let test;
+let search;
 
 // Sidebar links
 const sidebarLinks = [
@@ -100,6 +100,15 @@ const renderPage = () => {
 
     page = new Page(content.getHtml(), content.title, content.description);
     document.querySelector('#render-page').innerHTML = page.render();
+
+    
+    // Toggle switch listener
+    const toggle = document.querySelector('.toggleButton-styled');
+    toggle.addEventListener('click', (e) => {
+        const isActive = new Array(...toggle.classList).indexOf('active') !== -1;
+        if (isActive) return toggle.classList.remove('active');
+        return toggle.classList.add('active');
+    })
 };
 
 /**
@@ -118,11 +127,11 @@ window.onload = () => {
     renderPage(window.location.pathname);
 
     // Add search listener
-    document.querySelector('#test').addEventListener('keyup', useDebounce((e) => {
-        test = setValue('test', e.target.value);
+    document.querySelector('.searchbar-input').addEventListener('keyup', useDebounce((e) => {
+        search = setValue('search', e.target.value);
     }, 500));
 
-    em.on('setValue-test', (e) => console.log('Recieved new value: ', e))
+    em.on('setValue-search', (e) => console.log('Recieved new value: ', e))
 };
 
 /**

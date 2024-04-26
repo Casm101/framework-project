@@ -1,4 +1,8 @@
+// Component imports
 import { ContentCard } from "../components/ContentCard.js";
+import { SearchBar } from "../components/SearchBar.js";
+import { ToggleButton } from "../components/ToggleButton.js";
+
 
 /**
  * Movies page component
@@ -30,6 +34,12 @@ export class MoviesPage {
      */
     getHtml() {
         return `
+
+            <div class="page-header" style="gap: 3rem">
+                ${new SearchBar('Search movies').render()}
+                ${new ToggleButton().render()}
+            </div>
+
             <div class="page-header">
                 <p class="header-title">Movies</p>
                 <p class="header-sum">420</p>

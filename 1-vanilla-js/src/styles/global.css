@@ -3,6 +3,8 @@
 
 /* Component style imports */
 @import "./componentStyles/sidebar-styles.css";
+@import "./componentStyles/toggleButton-styles.css";
+@import "./componentStyles/searchBar-styles.css";
 
 
 /* Global styling */
