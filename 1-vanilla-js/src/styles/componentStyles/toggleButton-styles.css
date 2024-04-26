@@ -1,0 +1,29 @@
+/* Toggle button styling */
+.toggleButton-styled {
+    height: 40px;
+    min-width: 80px;
+
+    border-radius: 2rem;
+    border: 1px solid #2e2e2e;
+    padding: 4px 0 4px 4px;
+
+    background: #262626;
+
+    cursor: pointer;
+    transition: all cubic-bezier(0.46, 0.03, 0.52, 0.96) .15s;
+    ;
+}
+
+.toggleButton-styled .toggleButton-circle {
+    height: 30px;
+    width: 30px;
+
+    background: #1a1a1a;
+
+    border: 1px solid #2e2e2e;
+    border-radius: 100%;
+}
+
+.toggleButton-styled.active {
+    padding-left: 42px;
+}
