@@ -15,7 +15,7 @@ export class Sidebar {
     /**
      * Method to render sidebar links
      * @param { name: string, href: string }[] link 
-     * @returns string
+     * @returns {string}
      */
     link(link) {
 
