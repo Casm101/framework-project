@@ -69,7 +69,7 @@ const replaceLinks = () => {
 /**
  * Method that renders the page
  */
-const renderPage = () => {
+const renderPage = async () => {
     const path = window.location.pathname;
     let page;
     let content;
@@ -98,7 +98,7 @@ const renderPage = () => {
         }
     };
 
-    page = new Page(content.getHtml(), content.title, content.description);
+    page = new Page(await content.getHtml(), content.title, content.description);
     document.querySelector('#render-page').innerHTML = page.render();
 
     

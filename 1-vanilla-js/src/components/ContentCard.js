@@ -6,7 +6,7 @@ export class ContentCard {
     tags = [];
     cover = '';
 
-    constructor(title, tags, cover) {
+    constructor(title, tags, cover = './public/posters/sample.jpeg') {
         this.title = title;
         this.tags = tags;
         this.cover = cover;
@@ -15,7 +15,7 @@ export class ContentCard {
     render() {
         return `
             <article class="content-card">
-                <img class="cover" src="./public/posters/sample.jpeg" alt="">
+                <img class="cover" src="${this.cover}" alt="">
                 <div class="overlay">
                     <div class="overlay-title">
                         ${this.title}
