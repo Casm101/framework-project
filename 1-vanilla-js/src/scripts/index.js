@@ -20,6 +20,7 @@ import { FetchAnime } from "../services/FetchAnime.js";
 import { EventEmmiter } from "../utils/EventEmitter.js";
 import { getValue, setValue } from "../hooks/stateHooks.js";
 import { useDebounce } from "../hooks/debounce.js";
+import { scrollToTop } from "../hooks/scrollToTop.js";
 
 
 // Initialise event emitter
@@ -32,6 +33,7 @@ let search = '';
 let content;
 let genres;
 window.pageNumber = 1;
+
 
 // Sidebar links
 const sidebarLinks = [
@@ -151,6 +153,9 @@ const renderContent = async (search) => {
 
     // Add pagination listeners
     addPaginationListeners();
+
+    // Scroll to top of page
+    scrollToTop();
 };
 
 /**
