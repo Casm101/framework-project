@@ -10,9 +10,9 @@
     padding: 1rem 2rem;
 
     border-radius: .5rem;
-    border: 1px solid #2e2e2e;
+    border: 1px solid var(--border-terciary);
 
-    background: #262626;
+    background: var(--background-terciary);
     opacity: .8;
 
     transition: all .2s;
@@ -30,7 +30,7 @@
     width: 100%;
     font-size: 1rem;
 
-    color: #fff;
+    color: var(--text-primary);
 
     appearance: textfield;
     -webkit-appearance: textfield;
@@ -41,6 +41,6 @@
 }
 
 .searchbar-styled .searchbar-input::placeholder {
-    color: #fff;
+    color: var(--text-primary);
     opacity: .5;
 }

@@ -29,6 +29,7 @@ window.em = new EventEmmiter();
 let search;
 let content;
 let genres;
+let pageNumber = 1;
 
 // Sidebar links
 const sidebarLinks = [
@@ -165,13 +166,20 @@ const renderPage = async () => {
     const toggle = document.querySelector('.toggleButton-styled');
     toggle.addEventListener('click', (e) => {
         const isActive = new Array(...toggle.classList).indexOf('active') !== -1;
-        if (isActive) return toggle.classList.remove('active');
-        return toggle.classList.add('active');
+        if (isActive) {
+            document.querySelector(':root').classList.remove('light');
+            return toggle.classList.remove('active');
+        }
+        if (!isActive) {
+            document.querySelector(':root').classList.add('light');
+            return toggle.classList.add('active');
+        }
     });
 
     // Add search listener
     document.querySelector('.searchbar-input').addEventListener('keyup', useDebounce((e) => {
         search = setValue('search', e.target.value);
+        page = 1;
     }, 500));
 
     // Listen to search input and re-render content

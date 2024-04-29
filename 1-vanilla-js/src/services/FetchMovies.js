@@ -19,7 +19,7 @@ export class FetchMovies extends FetchContent {
         return this.getContentGenres('movie');
     };
 
-    searchMovies(search) {
-        return this.searchContent('movie', search);
+    searchMovies(search, page = 1) {
+        return this.searchContent('movie', search, page);
     }
 };

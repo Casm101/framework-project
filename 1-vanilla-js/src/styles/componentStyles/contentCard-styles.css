@@ -5,7 +5,7 @@
     width: 100%;
 
     border-radius: .5rem;
-    border: 1px solid #292929;
+    border: 2px solid var(--border-primary);
 
     overflow: hidden;
     cursor: pointer;
@@ -13,11 +13,12 @@
 }
 
 .content-card:hover {
-    border-color: #454545;
+    border-color: var(--border-secondary);
 }
 
 .content-card .cover {
     width: 100%;
+    aspect-ratio: 10 / 16;
     transition: all .5s;
 }
 
@@ -37,11 +38,18 @@
     height: 65px;
     padding: 8px 16px;
 
-    color: #fff;
-    background: #222222;
+    color: var(--text-primary);
+    background: var(--background-secondary);
 
     bottom: 0;
     z-index: 100;
+}
+
+.content-card .overlay .overlay-title {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .content-card .overlay .overlay-tags {

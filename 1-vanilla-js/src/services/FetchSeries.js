@@ -19,7 +19,7 @@ export class FetchSeries extends FetchContent {
         return this.getContentGenres('tv');
     };
 
-    searchSeries(search) {
-        return this.searchContent('tv', search);
+    searchSeries(search, page = 1) {
+        return this.searchContent('tv', search, page);
     };
 };
