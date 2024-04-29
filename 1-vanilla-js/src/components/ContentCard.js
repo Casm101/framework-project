@@ -21,7 +21,7 @@ export class ContentCard {
                         ${this.title}
                     </div>
                     <div class="overlay-tags">
-                        ${this.tags.map(tag => tag)}
+                        ${this.tags.map(tag => tag).join(' ')}
                     </div>
                 </div>
             </article>

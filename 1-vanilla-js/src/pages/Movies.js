@@ -14,17 +14,28 @@ export class MoviesPage {
     title = 'Movies - Framework Movies';
     description = 'All movies availible on the site.';
 
+    genres = {};
     content = [];
+    contentItems = 0;
+
 
     async getMovies() {
-        this.content = await new FetchMovies().getMovies();
+        const movieData = await new FetchMovies().getMovies();
+        this.content = movieData.results;
+        this.contentItems = movieData.total_results;
     };
+
+    async getGenres() {
+        this.genres = await new FetchMovies().getMoviesGenres();
+    };
+
 
     /**
      *  Method that returns page html in string
      */
     async getHtml() {
 
+        await this.getGenres();
         await this.getMovies();
 
         return `
@@ -35,14 +46,14 @@ export class MoviesPage {
 
             <div class="page-header">
                 <p class="header-title">Movies</p>
-                <p class="header-sum">420</p>
+                <p class="header-sum">${this.contentItems}</p>
             </div>
 
             <div class="content-grid">
                 ${this.content.map(c =>
                     new ContentCard(
                         c.title,
-                        c.genre_ids,
+                        c.genre_ids.map(genreId => this.genres[genreId]),
                         `https://image.tmdb.org/t/p/original${c.poster_path}`
                     ).render()).join('')
                 }

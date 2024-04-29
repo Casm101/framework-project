@@ -3,7 +3,7 @@ import { FetchContent } from "./index.js";
 
 
 /**
- * Service fo series movies from TMDB
+ * Service to fetch series from TMDB
  */
 export class FetchSeries extends FetchContent {
     
@@ -14,4 +14,8 @@ export class FetchSeries extends FetchContent {
     getSeriesById(id) {
         return this.getContentById('tv', id);
     };
-}
+
+    getSeriesGenres() {
+        return this.getContentGenres('tv');
+    };
+};
