@@ -2,6 +2,7 @@
 import { ContentCard } from "../components/ContentCard.js";
 import { SearchBar } from "../components/SearchBar.js";
 import { ToggleButton } from "../components/ToggleButton.js";
+import { Pagination } from "../components/Pagination.js";
 
 // Service imports
 import { FetchMovies } from "../services/FetchMovies.js";
@@ -17,12 +18,14 @@ export class MoviesPage {
     genres = {};
     content = [];
     contentItems = 0;
+    contentPages = 0;
 
 
     async getMovies() {
         const movieData = await new FetchMovies().getMovies();
         this.content = movieData.results;
         this.contentItems = movieData.total_results;
+        this.contentPages = movieData.total_pages;
     };
 
     async getGenres() {
@@ -58,6 +61,8 @@ export class MoviesPage {
                     ).render()).join('')
                 }
             </div>
+
+            ${new Pagination(pageNumber, this.contentPages).render()}
         `;
     };
 };

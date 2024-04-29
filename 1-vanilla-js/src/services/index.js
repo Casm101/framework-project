@@ -16,7 +16,7 @@ export class FetchContent {
 
     async getContent(contentType, page = 1) {
         contentType = this.isAnime(contentType);
-        return fetch(`${this.baseURL}discover/${contentType}?api_key=${this.apiKey}${this.optionalParams}&${page}`)
+        return fetch(`${this.baseURL}discover/${contentType}?api_key=${this.apiKey}${this.optionalParams}&page=${page}`)
             .then(response => response.json())
             .then(data => data);
     };
@@ -40,7 +40,7 @@ export class FetchContent {
 
     async searchContent(contentType, searchValue, page = 1) {
         contentType = this.isAnime(contentType);
-        return fetch(`${this.baseURL}search/${contentType}?query=${searchValue}&api_key=${this.apiKey}&${page}`)
+        return fetch(`${this.baseURL}search/${contentType}?query=${searchValue}&api_key=${this.apiKey}&page=${page}`)
             .then(response => response.json())
             .then(data => data);
     };

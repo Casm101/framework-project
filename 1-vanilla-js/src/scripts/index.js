@@ -2,6 +2,7 @@
 import { Sidebar } from "../components/Sidebar.js";
 import { Page } from "../components/Page.js";
 import { ContentCard } from "../components/ContentCard.js";
+import { Pagination } from "../components/Pagination.js";
 
 // Page imports
 import { MoviesPage } from "../pages/Movies.js";
@@ -26,10 +27,11 @@ window.getValue = getValue;
 window.setValue = setValue;
 window.em = new EventEmmiter();
 
-let search;
+// Declare global variables
+let search = '';
 let content;
 let genres;
-let pageNumber = 1;
+window.pageNumber = 1;
 
 // Sidebar links
 const sidebarLinks = [
@@ -75,6 +77,7 @@ const replaceLinks = () => {
     });
 };
 
+
 /**
  * Method to render content to existing page
  */
@@ -88,22 +91,22 @@ const renderContent = async (search) => {
     // Fetch data depending on current path
     switch (path) {
         case '/': {
-            if (search !== '') searchContent = await new FetchMovies().searchMovies(search);
-            if (search === '') searchContent = await new FetchMovies().getMovies();
+            if (search !== '') searchContent = await new FetchMovies().searchMovies(search, pageNumber);
+            if (search === '') searchContent = await new FetchMovies().getMovies(pageNumber);
             titleName = 'title';
             genres = await new FetchMovies().getMoviesGenres();
             break;
         }
         case '/tv-series': {
-            if (search !== '') searchContent = await new FetchSeries().searchSeries(search);
-            if (search === '') searchContent = await new FetchSeries().getSeries();
+            if (search !== '') searchContent = await new FetchSeries().searchSeries(search, pageNumber);
+            if (search === '') searchContent = await new FetchSeries().getSeries(pageNumber);
             titleName = 'name';
             genres = await new FetchSeries().getSeriesGenres();
             break;
         }
         case '/anime': {
-            if (search !== '') searchContent = await new FetchAnime().searchAnime(search);
-            if (search === '') searchContent = await new FetchAnime().getAnime();
+            if (search !== '') searchContent = await new FetchAnime().searchAnime(search, pageNumber);
+            if (search === '') searchContent = await new FetchAnime().getAnime(pageNumber);
             titleName = 'name';
             genres = await new FetchSeries().getSeriesGenres();
             break;
@@ -124,6 +127,9 @@ const renderContent = async (search) => {
 
     // Render cards to content grid
     document.querySelector('.content-grid').innerHTML = content;
+
+    // Re-render pagination on page
+    document.querySelector('.pagination-styled').outerHTML = new Pagination(pageNumber, searchContent.total_pages).render();
 };
 
 /**
@@ -153,7 +159,6 @@ const renderPage = async () => {
         }
         default: {
             content = new Error404Page();
-            console.log('error here bud');
             break;
         }
     };
@@ -184,6 +189,19 @@ const renderPage = async () => {
 
     // Listen to search input and re-render content
     em.on('setValue-search', (e) => renderContent(e));
+
+    // Add pagination listeners
+    document.querySelectorAll('.pagination-button').forEach(button => {
+        if (!button.classList.contains('disabled')) {
+            button.addEventListener('click', async (e) => {
+                let newPage = e.target.innerHTML;
+                if (newPage === 'Prev') newPage = pageNumber - 1;
+                if (newPage === 'Next') newPage = pageNumber + 1;
+                pageNumber = newPage;
+                await renderContent(search);
+            })
+        }
+    });
 };
 
 /**
