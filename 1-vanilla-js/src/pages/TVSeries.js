@@ -2,6 +2,7 @@
 import { ContentCard } from "../components/ContentCard.js";
 import { SearchBar } from "../components/SearchBar.js";
 import { ToggleButton } from "../components/ToggleButton.js";
+import { Pagination } from "../components/Pagination.js";
 
 // Service imports
 import { FetchSeries } from "../services/FetchSeries.js";
@@ -16,11 +17,13 @@ export class TVSeriesPage {
     genres = {};
     content = [];
     contentItems = 0;
+    contentPages = 0;
 
     async getSeries() {
         const seriesData = await new FetchSeries().getSeries();
         this.content = seriesData.results;
         this.contentItems = seriesData.total_results;
+        this.contentPages = seriesData.total_pages > 500 ? 500 : seriesData.total_pages;
     };
 
     async getGenres() {
@@ -55,6 +58,8 @@ export class TVSeriesPage {
                     ).render()).join('')
                 }
             </div>
+
+            ${new Pagination(pageNumber, this.contentPages).render()}
         `;
     };
 };

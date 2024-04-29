@@ -2,6 +2,7 @@
 import { ContentCard } from "../components/ContentCard.js";
 import { SearchBar } from "../components/SearchBar.js";
 import { ToggleButton } from "../components/ToggleButton.js";
+import { Pagination } from "../components/Pagination.js";
 
 // Service imports
 import { FetchAnime } from "../services/FetchAnime.js";
@@ -16,11 +17,13 @@ export class AnimePage {
     genres = {};
     content = [];
     contentItems = 0;
+    contentPages = 0;
 
     async getAnime() {
-        const seriesData = await new FetchAnime().getAnime();
-        this.content = seriesData.results;
-        this.contentItems = seriesData.total_results;
+        const animeData = await new FetchAnime().getAnime();
+        this.content = animeData.results;
+        this.contentItems = animeData.total_results;
+        this.contentPages = animeData.total_pages > 500 ? 500 : animeData.total_pages;
     };
 
     async getGenres() {
@@ -55,6 +58,8 @@ export class AnimePage {
                     ).render()).join('')
                 }
             </div>
+
+            ${new Pagination(pageNumber, this.contentPages).render()}
         `;
     };
 };
