@@ -25,7 +25,7 @@ export class MoviesPage {
         const movieData = await new FetchMovies().getMovies();
         this.content = movieData.results;
         this.contentItems = movieData.total_results;
-        this.contentPages = movieData.total_pages;
+        this.contentPages = movieData.total_pages > 500 ? 500 : movieData.total_pages;
     };
 
     async getGenres() {

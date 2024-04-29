@@ -33,14 +33,14 @@ export class Pagination {
 
         if (this.page < 5 && this.totalPages <= 5) {
             for (let i = 1; i < this.totalPages + 1; i++) {
-                const isActive = i === this.page;
+                const isActive = i == this.page;
                 buttons.push(this.paginationButton(i, isActive, false));
             }
         }
 
         if (this.page < 5 && this.totalPages > 5) {
             for (let i = 1; i < 6; i++) {
-                const isActive = i === this.page;
+                const isActive = i == this.page;
                 buttons.push(this.paginationButton(i, isActive, false));
             }
             buttons.push(this.paginationButton('...', false, true));
@@ -48,14 +48,14 @@ export class Pagination {
         }
 
         if (this.page >= 5 && this.page <= this.totalPages - 5) {
-            const start = this.page - 2;
-            const end = this.page + 3;
+            const start = parseInt(this.page - 2);
+            const end = parseInt(this.page) + 3;
 
             buttons.push(this.paginationButton('1', false, false));
             buttons.push(this.paginationButton('...', false, true));
 
             for (let i = start; i < end; i++) {
-                const isActive = i === this.page;
+                const isActive = i == this.page;
                 buttons.push(this.paginationButton(i, isActive, false));
             };
 
@@ -64,18 +64,16 @@ export class Pagination {
         }
 
         if (this.page > 5 && this.page > this.totalPages - 5) {
-            const start = this.totalPages - 4;
-            const end = this.totalPages;
+            const start = parseInt(this.totalPages - 4);
+            const end = parseInt(this.totalPages);
 
             buttons.push(this.paginationButton('1', false, false));
             buttons.push(this.paginationButton('...', false, true));
 
-            for (let i = start; i < end; i++) {
-                const isActive = i === this.page;
+            for (let i = start; i <= end; i++) {
+                const isActive = i == this.page;
                 buttons.push(this.paginationButton(i, isActive, false));
             };
-
-            buttons.push(this.paginationButton(this.totalPages, false, false));
         }
 
         buttons.push(this.paginationButton('Next', false, nextDisabled));

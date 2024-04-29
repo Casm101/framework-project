@@ -79,6 +79,24 @@ const replaceLinks = () => {
 
 
 /**
+ * Method to add pagination listeners
+ */
+const addPaginationListeners = () => {
+    document.querySelectorAll('.pagination-button').forEach(button => {
+        if (!button.classList.contains('disabled')) {
+            button.addEventListener('click', async (e) => {
+                let newPage = e.target.innerHTML;
+                if (newPage === 'Prev') newPage = parseInt(pageNumber) - 1;
+                if (newPage === 'Next') newPage = parseInt(pageNumber) + 1;
+                pageNumber = newPage > 500 ? 500 : newPage;
+                await renderContent(search);
+            })
+        }
+    });
+};
+
+
+/**
  * Method to render content to existing page
  */
 const renderContent = async (search) => {
@@ -129,7 +147,10 @@ const renderContent = async (search) => {
     document.querySelector('.content-grid').innerHTML = content;
 
     // Re-render pagination on page
-    document.querySelector('.pagination-styled').outerHTML = new Pagination(pageNumber, searchContent.total_pages).render();
+    document.querySelector('.pagination-styled').outerHTML = new Pagination(pageNumber, searchContent.total_pages > 500 ? 500 : searchContent.total_pages).render();
+
+    // Add pagination listeners
+    addPaginationListeners();
 };
 
 /**
@@ -184,24 +205,14 @@ const renderPage = async () => {
     // Add search listener
     document.querySelector('.searchbar-input').addEventListener('keyup', useDebounce((e) => {
         search = setValue('search', e.target.value);
-        page = 1;
+        pageNumber = 1;
     }, 500));
 
     // Listen to search input and re-render content
     em.on('setValue-search', (e) => renderContent(e));
 
     // Add pagination listeners
-    document.querySelectorAll('.pagination-button').forEach(button => {
-        if (!button.classList.contains('disabled')) {
-            button.addEventListener('click', async (e) => {
-                let newPage = e.target.innerHTML;
-                if (newPage === 'Prev') newPage = pageNumber - 1;
-                if (newPage === 'Next') newPage = pageNumber + 1;
-                pageNumber = newPage;
-                await renderContent(search);
-            })
-        }
-    });
+    addPaginationListeners();
 };
 
 /**
