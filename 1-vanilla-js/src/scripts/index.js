@@ -1,6 +1,7 @@
 // Component imports
 import { Sidebar } from "../components/Sidebar.js";
 import { Page } from "../components/Page.js";
+import { ContentCard } from "../components/ContentCard.js";
 
 // Page imports
 import { MoviesPage } from "../pages/Movies.js";
@@ -8,6 +9,11 @@ import { TVSeriesPage } from "../pages/TVSeries.js";
 import { AnimePage } from "../pages/Anime.js";
 import { FavouritesPage } from "../pages/Favourites.js";
 import { Error404Page } from "../pages/Error404.js";
+
+// Service imports
+import { FetchMovies } from "../services/FetchMovies.js";
+import { FetchSeries } from "../services/FetchSeries.js";
+import { FetchAnime } from "../services/FetchAnime.js";
 
 // Util and hook imports
 import { EventEmmiter } from "../utils/EventEmitter.js";
@@ -21,6 +27,8 @@ window.setValue = setValue;
 window.em = new EventEmmiter();
 
 let search;
+let content;
+let genres;
 
 // Sidebar links
 const sidebarLinks = [
@@ -67,6 +75,57 @@ const replaceLinks = () => {
 };
 
 /**
+ * Method to render content to existing page
+ */
+const renderContent = async (search) => {
+
+    let titleName;
+    let searchContent;
+    
+    const path = window.location.pathname;
+
+    // Fetch data depending on current path
+    switch (path) {
+        case '/': {
+            if (search !== '') searchContent = await new FetchMovies().searchMovies(search);
+            if (search === '') searchContent = await new FetchMovies().getMovies();
+            titleName = 'title';
+            genres = await new FetchMovies().getMoviesGenres();
+            break;
+        }
+        case '/tv-series': {
+            if (search !== '') searchContent = await new FetchSeries().searchSeries(search);
+            if (search === '') searchContent = await new FetchSeries().getSeries();
+            titleName = 'name';
+            genres = await new FetchSeries().getSeriesGenres();
+            break;
+        }
+        case '/anime': {
+            if (search !== '') searchContent = await new FetchAnime().searchAnime(search);
+            if (search === '') searchContent = await new FetchAnime().getAnime();
+            titleName = 'name';
+            genres = await new FetchSeries().getSeriesGenres();
+            break;
+        }
+    };
+
+    // Change total content from search results
+    document.querySelector('.header-sum').innerHTML = searchContent.total_results;
+    
+    // Create content cards from search results
+    content = searchContent.results.map(c => (
+        new ContentCard(
+            c[titleName],
+            c.genre_ids.map(genreId => genres[genreId]),
+            `https://image.tmdb.org/t/p/original${c.poster_path}`
+        ).render())
+    ).join('');
+
+    // Render cards to content grid
+    document.querySelector('.content-grid').innerHTML = content;
+};
+
+/**
  * Method that renders the page
  */
 const renderPage = async () => {
@@ -98,9 +157,9 @@ const renderPage = async () => {
         }
     };
 
+    // Render page component with corresponding page template
     page = new Page(await content.getHtml(), content.title, content.description);
     document.querySelector('#render-page').innerHTML = page.render();
-
     
     // Toggle switch listener
     const toggle = document.querySelector('.toggleButton-styled');
@@ -108,7 +167,15 @@ const renderPage = async () => {
         const isActive = new Array(...toggle.classList).indexOf('active') !== -1;
         if (isActive) return toggle.classList.remove('active');
         return toggle.classList.add('active');
-    })
+    });
+
+    // Add search listener
+    document.querySelector('.searchbar-input').addEventListener('keyup', useDebounce((e) => {
+        search = setValue('search', e.target.value);
+    }, 500));
+
+    // Listen to search input and re-render content
+    em.on('setValue-search', (e) => renderContent(e));
 };
 
 /**
@@ -125,13 +192,6 @@ window.onload = () => {
 
     // Render page
     renderPage(window.location.pathname);
-
-    // Add search listener
-    document.querySelector('.searchbar-input').addEventListener('keyup', useDebounce((e) => {
-        search = setValue('search', e.target.value);
-    }, 500));
-
-    em.on('setValue-search', (e) => console.log('Recieved new value: ', e))
 };
 
 /**

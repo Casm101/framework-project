@@ -9,7 +9,6 @@ export class FetchContent {
     isAnime(type) {
         if (type === 'anime') {
             this.optionalParams += '&with_genres=16&with_origin_country=JP';
-            console.log('here');
             return 'tv';
         }
         return type;
@@ -17,7 +16,6 @@ export class FetchContent {
 
     async getContent(contentType, page = 1) {
         contentType = this.isAnime(contentType);
-        console.log(`${this.baseURL}discover/${contentType}?api_key=${this.apiKey}${this.optionalParams}`);
         return fetch(`${this.baseURL}discover/${contentType}?api_key=${this.apiKey}${this.optionalParams}`)
             .then(response => response.json())
             .then(data => data);
@@ -38,5 +36,12 @@ export class FetchContent {
                 obj[item.id] = item.name;
                 return obj;
             }, {}));
+    };
+
+    async searchContent(contentType, searchValue) {
+        contentType = this.isAnime(contentType);
+        return fetch(`${this.baseURL}search/${contentType}?query=${searchValue}&api_key=${this.apiKey}`)
+            .then(response => response.json())
+            .then(data => data);
     };
 };

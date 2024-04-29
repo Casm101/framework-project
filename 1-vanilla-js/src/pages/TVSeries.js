@@ -37,7 +37,7 @@ export class TVSeriesPage {
 
         return `
             <div class="page-header" style="gap: 3rem">
-                ${new SearchBar('Search movies').render()}
+                ${new SearchBar('Search series').render()}
                 ${new ToggleButton().render()}
             </div>
 

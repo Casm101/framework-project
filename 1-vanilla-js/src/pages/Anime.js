@@ -37,7 +37,7 @@ export class AnimePage {
 
         return `
             <div class="page-header" style="gap: 3rem">
-                ${new SearchBar('Search movies').render()}
+                ${new SearchBar('Search anime').render()}
                 ${new ToggleButton().render()}
             </div>
 

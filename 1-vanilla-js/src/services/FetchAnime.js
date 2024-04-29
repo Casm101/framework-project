@@ -18,4 +18,8 @@ export class FetchAnime extends FetchContent {
     getAnimeGenres() {
         return this.getContentGenres('anime');
     };
+
+    searchAnime(search) {
+        return this.searchContent('anime', search);
+    }
 };

@@ -8,7 +8,7 @@ export class ContentCard {
 
     constructor(title, tags, cover = './public/posters/sample.jpeg') {
         this.title = title;
-        this.tags = tags;
+        this.tags = tags.splice(0, 2);
         this.cover = cover;
     }
 
@@ -21,10 +21,10 @@ export class ContentCard {
                         ${this.title}
                     </div>
                     <div class="overlay-tags">
-                        ${this.tags.map(tag => tag).join(' ')}
+                        ${this.tags.map(tag => tag).join(' - ')}
                     </div>
                 </div>
             </article>
         `;
-    }
-}
+    };
+};
