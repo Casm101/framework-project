@@ -30,6 +30,7 @@
 .sidebar-navigation .navigation-link {
     display: flex;
     align-items: center;
+    gap: .75rem;
 
     padding-left: 1rem;
     border-radius: .5rem;
@@ -40,6 +41,10 @@
     color: var(--text-primary);
 
     transition: all .2s;
+}
+
+.sidebar-navigation .navigation-link img {
+    width: 1.75rem;
 }
 
 .sidebar-navigation .navigation-link span {

@@ -40,19 +40,25 @@ window.pageNumber = 1;
 const sidebarLinks = [
     {
         name: 'Movies',
-        href: '/'
+        href: '/',
+        icon: './public/icons/film-icon.svg'
     },
     {
         name: 'TV Series',
-        href: '/tv-series'
+        href: '/tv-series',
+        icon: './public/icons/series-icon.svg'
+        
     },
     {
         name: 'Anime',
-        href: '/anime'
+        href: '/anime',
+        icon: './public/icons/anime-icon.svg'
+
     },
     {
         name: 'Favourites',
-        href: '/favourites'
+        href: '/favourites',
+        icon: './public/icons/heart-icon.svg'
     }
 ];
 

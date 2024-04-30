@@ -24,6 +24,7 @@ export class Sidebar {
         
         return `
             <a href="${link.href}" class="navigation-link ${activeClass}">
+                <img src="${link.icon}">
                 <span>${link.name}</span>
             </a>
         `;
