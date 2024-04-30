@@ -55,9 +55,11 @@ export class MoviesPage {
             <div class="content-grid">
                 ${this.content.map(c =>
                     new ContentCard(
+                        c.id,
                         c.title,
-                        c.genre_ids.map(genreId => this.genres[genreId]),
-                        `https://image.tmdb.org/t/p/original${c.poster_path}`
+                        c.genre_ids.map(genreId => this.genres[genreId],),
+                        `https://image.tmdb.org/t/p/original${c.poster_path}`,
+                        'movie'
                     ).render()).join('')
                 }
             </div>

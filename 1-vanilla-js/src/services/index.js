@@ -23,7 +23,7 @@ export class FetchContent {
 
     async getContentById(contentType, id) {
         contentType = this.isAnime(contentType);
-        return fetch(`${this.baseURL}${contentType}/${this.id}?api_key=${this.apiKey}${this.optionalParams}`)
+        return fetch(`${this.baseURL}${contentType}/${id}?api_key=${this.apiKey}${this.optionalParams}`)
             .then(response => response.json())
             .then(data => data);
     };

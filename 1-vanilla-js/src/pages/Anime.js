@@ -52,9 +52,11 @@ export class AnimePage {
             <div class="content-grid">
                 ${this.content.map(c =>
                     new ContentCard(
+                        c.id,
                         c.name,
                         c.genre_ids.map(genreId => this.genres[genreId]),
-                        `https://image.tmdb.org/t/p/original${c.poster_path}`
+                        `https://image.tmdb.org/t/p/original${c.poster_path}`,
+                        'series'
                     ).render()).join('')
                 }
             </div>

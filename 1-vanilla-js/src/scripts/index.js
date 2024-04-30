@@ -21,6 +21,7 @@ import { EventEmmiter } from "../utils/EventEmitter.js";
 import { getValue, setValue } from "../hooks/stateHooks.js";
 import { useDebounce } from "../hooks/debounce.js";
 import { scrollToTop } from "../hooks/scrollToTop.js";
+import { LocalStore } from "../utils/LocalStore.js";
 
 
 // Initialise event emitter
@@ -99,6 +100,35 @@ const addPaginationListeners = () => {
 
 
 /**
+ * Method to add content card listeners
+ */
+const addContentCardListeners = () => {
+    document.querySelectorAll('.content-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+            const contentId = e.target.closest('.content-card').getAttribute('content');;
+            const contentType = contentId.split('_')[0];
+            const contentValue = contentId.split('_')[1];
+            let existing = [];
+
+            const ls = new LocalStore;
+
+            if (contentType === 'movie') {
+                existing = ls.getMovies();
+                if (!existing.includes(contentValue)) ls.addMovies([contentValue]);
+                if (existing.includes(contentValue)) ls.removeMovie(contentValue);
+            }
+
+            if (contentType === 'series') {
+                existing = ls.getSeries();
+                if (existing.includes(contentValue)) return;
+                if (!existing.includes(contentValue)) ls.addSeries([contentValue]);
+            }
+        });
+    });
+};
+
+
+/**
  * Method to render content to existing page
  */
 const renderContent = async (search) => {
@@ -154,6 +184,9 @@ const renderContent = async (search) => {
     // Add pagination listeners
     addPaginationListeners();
 
+    // Add content card listeners
+    addContentCardListeners();
+
     // Scroll to top of page
     scrollToTop();
 };
@@ -195,7 +228,7 @@ const renderPage = async () => {
     
     // Toggle switch listener
     const toggle = document.querySelector('.toggleButton-styled');
-    toggle.addEventListener('click', (e) => {
+    toggle?.addEventListener('click', (e) => {
         const isActive = new Array(...toggle.classList).indexOf('active') !== -1;
         if (isActive) {
             document.querySelector(':root').classList.remove('light');
@@ -218,6 +251,9 @@ const renderPage = async () => {
 
     // Add pagination listeners
     addPaginationListeners();
+
+    // Add content card listeners
+    addContentCardListeners();
 };
 
 /**
