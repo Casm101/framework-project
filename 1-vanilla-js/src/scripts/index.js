@@ -135,6 +135,7 @@ const renderContent = async (search) => {
 
     let titleName;
     let searchContent;
+    let contentType;
     
     const path = window.location.pathname;
 
@@ -145,6 +146,7 @@ const renderContent = async (search) => {
             if (search === '') searchContent = await new FetchMovies().getMovies(pageNumber);
             titleName = 'title';
             genres = await new FetchMovies().getMoviesGenres();
+            contentType = 'movie';
             break;
         }
         case '/tv-series': {
@@ -152,6 +154,7 @@ const renderContent = async (search) => {
             if (search === '') searchContent = await new FetchSeries().getSeries(pageNumber);
             titleName = 'name';
             genres = await new FetchSeries().getSeriesGenres();
+            contentType = 'series';
             break;
         }
         case '/anime': {
@@ -159,6 +162,7 @@ const renderContent = async (search) => {
             if (search === '') searchContent = await new FetchAnime().getAnime(pageNumber);
             titleName = 'name';
             genres = await new FetchSeries().getSeriesGenres();
+            contentType = 'series';
             break;
         }
     };
@@ -169,9 +173,11 @@ const renderContent = async (search) => {
     // Create content cards from search results
     content = searchContent.results.map(c => (
         new ContentCard(
+            c.id,
             c[titleName],
             c.genre_ids.map(genreId => genres[genreId]),
-            `https://image.tmdb.org/t/p/original${c.poster_path}`
+            `https://image.tmdb.org/t/p/original${c.poster_path}`,
+            contentType
         ).render())
     ).join('');
 
