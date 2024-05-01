@@ -19,9 +19,8 @@ import { FetchAnime } from "../services/FetchAnime.js";
 // Util and hook imports
 import { EventEmmiter } from "../utils/EventEmitter.js";
 import { getValue, setValue } from "../hooks/stateHooks.js";
-import { useDebounce } from "../hooks/debounce.js";
 import { scrollToTop } from "../hooks/scrollToTop.js";
-import { LocalStore } from "../utils/LocalStore.js";
+import { replaceLinks, addPaginationListeners, addContentCardListeners, addSearchBarListener, addToggleButtonListner } from "../utils/EventListeners.js";
 
 
 // Initialise event emitter
@@ -30,7 +29,7 @@ window.setValue = setValue;
 window.em = new EventEmmiter();
 
 // Declare global variables
-let search = '';
+window.search = '';
 let content;
 let genres;
 window.pageNumber = 1;
@@ -61,77 +60,6 @@ const sidebarLinks = [
         icon: './public/icons/heart-icon.svg'
     }
 ];
-
-
-/**
- * Method for artificial link routing.
- */
-const handleLinkClick = (event) => {
-    
-    // Prevent default link functionality
-    event.preventDefault();
-
-    // Retrieve link href and push to history
-    const href = event.currentTarget.getAttribute('href');
-    window.history.pushState({}, '', href);
-};
-
-/**
- * Method to replace links with artificial routing
- */
-const replaceLinks = () => {
-    const links = document.querySelectorAll('a');
-    links.forEach(link => {
-        link.addEventListener('click', handleLinkClick);
-    });
-};
-
-
-/**
- * Method to add pagination listeners
- */
-const addPaginationListeners = () => {
-    document.querySelectorAll('.pagination-button').forEach(button => {
-        if (!button.classList.contains('disabled')) {
-            button.addEventListener('click', async (e) => {
-                let newPage = e.target.innerHTML;
-                if (newPage === 'Prev') newPage = parseInt(pageNumber) - 1;
-                if (newPage === 'Next') newPage = parseInt(pageNumber) + 1;
-                pageNumber = newPage > 500 ? 500 : newPage;
-                await renderContent(search);
-            })
-        }
-    });
-};
-
-
-/**
- * Method to add content card listeners
- */
-const addContentCardListeners = () => {
-    document.querySelectorAll('.content-card').forEach(card => {
-        card.addEventListener('click', (e) => {
-            const contentId = e.target.closest('.content-card').getAttribute('content');;
-            const contentType = contentId.split('_')[0];
-            const contentValue = contentId.split('_')[1];
-            let existing = [];
-
-            const ls = new LocalStore;
-
-            if (contentType === 'movie') {
-                existing = ls.getMovies();
-                if (!existing.includes(contentValue)) ls.addMovies([contentValue]);
-                if (existing.includes(contentValue)) ls.removeMovie(contentValue);
-            }
-
-            if (contentType === 'series') {
-                existing = ls.getSeries();
-                if (existing.includes(contentValue)) return;
-                if (!existing.includes(contentValue)) ls.addSeries([contentValue]);
-            }
-        });
-    });
-};
 
 
 /**
@@ -239,24 +167,10 @@ const renderPage = async () => {
     document.querySelector('#render-page').innerHTML = page.render();
     
     // Toggle switch listener
-    const toggle = document.querySelector('.toggleButton-styled');
-    toggle?.addEventListener('click', (e) => {
-        const isActive = new Array(...toggle.classList).indexOf('active') !== -1;
-        if (isActive) {
-            document.querySelector(':root').classList.remove('light');
-            return toggle.classList.remove('active');
-        }
-        if (!isActive) {
-            document.querySelector(':root').classList.add('light');
-            return toggle.classList.add('active');
-        }
-    });
+    addToggleButtonListner();
 
     // Add search listener
-    document.querySelector('.searchbar-input').addEventListener('keyup', useDebounce((e) => {
-        search = setValue('search', e.target.value);
-        pageNumber = 1;
-    }, 500));
+    addSearchBarListener();
 
     // Listen to search input and re-render content
     em.on('setValue-search', (e) => renderContent(e));

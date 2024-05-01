@@ -51,11 +51,22 @@ export class LocalStore {
      * @param [string] seriesArray 
      */
     addSeries(seriesArray) {
-        const existingSeries = JSON.parse(localStorage.getItem('series'));
-        if (existingSeries.length <= 0) {
-            localStorage.setItem('series', seriesArray);
+        const existingSeries = JSON.parse(localStorage.getItem('series')) || [];
+        if (existingSeries.constructor !== Array) {
+            localStorage.setItem('series', JSON.stringify(seriesArray));
         } else {
-            localStorage.setItem('series', [...existingSeries, ...seriesArray]);
+            localStorage.setItem('series', JSON.stringify([...existingSeries, ...seriesArray]));
         }
+    };
+
+    /**
+     * Method to remove series from local storage
+     * @param {string} movieId
+     */
+    removeSeries(seriesId) {
+        console.log('here');
+        const existingSeries = JSON.parse(localStorage.getItem('series'));
+        const newArr = existingSeries.filter(id => id !== seriesId)
+        localStorage.setItem('series', JSON.stringify(newArr));
     };
 };

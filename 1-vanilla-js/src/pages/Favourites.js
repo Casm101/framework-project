@@ -3,6 +3,7 @@ import { ContentCard } from "../components/ContentCard.js";
 
 // Service imports
 import { FetchMovies } from "../services/FetchMovies.js";
+import { FetchSeries } from "../services/FetchSeries.js";
 
 // Utility imports
 import { LocalStore } from "../utils/LocalStore.js";
@@ -26,13 +27,14 @@ export class FavouritesPage {
         const series = ls.getSeries() || [];
 
         const fm = new FetchMovies();
+        const fs = new FetchSeries();
 
         this.moviesContent = await Promise.all(movies.map(async (id) => {
             return await fm.getMovieById(id)
         }));
 
         this.seriesContent = await Promise.all(series.map(async (id) => {
-            return await fm.getSeriesById(id)
+            return await fs.getSeriesById(id)
         }));
 
         return `
@@ -46,6 +48,16 @@ export class FavouritesPage {
                     new ContentCard(
                         c.id,
                         c.title,
+                        c.genres.map(genre => genre.name),
+                        `https://image.tmdb.org/t/p/original${c.poster_path}`,
+                        'movie'
+                    ).render()).join('')
+                }
+
+                ${this.seriesContent?.map(c =>
+                    new ContentCard(
+                        c.id,
+                        c.name,
                         c.genres.map(genre => genre.name),
                         `https://image.tmdb.org/t/p/original${c.poster_path}`,
                         'movie'
