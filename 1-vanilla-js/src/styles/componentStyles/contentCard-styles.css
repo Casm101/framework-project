@@ -26,6 +26,25 @@
     transform: scale(1.05);
 }
 
+.content-card .content-like {
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+
+    z-index: 100;
+    opacity: 0;
+    transition: .5s;
+}
+
+.content-card .content-like svg {
+    width: 2rem;
+    color: #f1412b;
+}
+
+.content-card:hover .content-like {
+    opacity: 1;
+}
+
 .content-card .overlay {
     display: flex;
     justify-content: center;

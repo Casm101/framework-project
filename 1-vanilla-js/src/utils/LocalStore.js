@@ -42,7 +42,7 @@ export class LocalStore {
      */
     getSeries() {
         const series = JSON.parse(localStorage.getItem('series'));
-        if (series?.length <= 0) return [];
+        if (series?.length <= 0 || series?.length == undefined) return [];
         return series;
     };
 
