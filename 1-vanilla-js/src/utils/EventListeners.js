@@ -1,5 +1,6 @@
 import { LocalStore } from "../utils/LocalStore.js";
 import { useDebounce } from "../hooks/debounce.js";
+import { Modal } from "../components/Modal.js";
 
 /**
  * Method for artificial link routing.
@@ -102,7 +103,28 @@ export const addContentCardListeners = () => {
                     clickTarget.closest('.content-like').innerHTML = likedButton;
                 }
             }
+
+            // Action if card is clicked
+            if (!clickTarget.closest('.content-like')) {
+                const modalRender = document.querySelector('#render-modal');
+
+                console.log('here');
+
+                modalRender.classList.toggle('visible');
+                modalRender.innerHTML = new Modal().render();
+
+                addCloseModalListener();
+            }
         });
+    });
+};
+
+/**
+ * Method to add close modal listener
+ */
+export const addCloseModalListener = () => {
+    document.querySelector('.close-modal')?.addEventListener('click', () => {
+        modalRender.classList.toggle('visible');
     });
 };
 

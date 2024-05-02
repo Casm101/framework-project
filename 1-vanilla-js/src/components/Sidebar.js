@@ -32,7 +32,7 @@ export class Sidebar {
 
     /**
      * Method to render sidebar component
-     * @returns string
+     * @returns {string}
      */
     render() {
 
