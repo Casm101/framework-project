@@ -1,6 +1,14 @@
-import { LocalStore } from "../utils/LocalStore.js";
-import { useDebounce } from "../hooks/debounce.js";
+// Component imports
 import { Modal } from "../components/Modal.js";
+
+// Service imports
+import { FetchMovies } from "../services/FetchMovies.js";
+import { FetchSeries } from "../services/FetchSeries.js";
+
+// Hook and util imports
+import { useDebounce } from "../hooks/debounce.js";
+import { LocalStore } from "../utils/LocalStore.js";
+
 
 /**
  * Method for artificial link routing.
@@ -26,28 +34,11 @@ export const replaceLinks = () => {
 };
 
 /**
- * Method to add pagination listeners
- */
-export const addPaginationListeners = () => {
-    document.querySelectorAll('.pagination-button').forEach(button => {
-        if (!button.classList.contains('disabled')) {
-            button.addEventListener('click', async (e) => {
-                let newPage = e.target.innerHTML;
-                if (newPage === 'Prev') newPage = parseInt(pageNumber) - 1;
-                if (newPage === 'Next') newPage = parseInt(pageNumber) + 1;
-                pageNumber = newPage > 500 ? 500 : newPage;
-                await renderContent(search);
-            })
-        }
-    });
-};
-
-/**
  * Method to add content card listeners
  */
 export const addContentCardListeners = () => {
     document.querySelectorAll('.content-card').forEach(card => {
-        card.addEventListener('click', (e) => {
+        card.addEventListener('click', async (e) => {
             const clickTarget = e.target;
             const contentId = clickTarget.closest('.content-card').getAttribute('content');
             const contentType = contentId.split('_')[0];
@@ -105,11 +96,21 @@ export const addContentCardListeners = () => {
             }
 
             // Action if card is clicked
-            if (!clickTarget.closest('.content-like')) {
+            if (clickTarget.tagName !== 'path' && clickTarget.tagName !== 'svg') {
+                
                 const modalRender = document.querySelector('#render-modal');
+                let content;
+
+                if (contentType === 'movie') {
+                    content = await new FetchMovies().getMovieById(contentValue);
+                }
+
+                if (contentType === 'series') {
+                    content = await new FetchSeries().getSeriesById(contentValue);
+                }
 
                 modalRender.classList.toggle('visible');
-                modalRender.innerHTML = new Modal().render();
+                modalRender.innerHTML = new Modal(content).render();
 
                 addCloseModalListener();
             }
@@ -122,7 +123,7 @@ export const addContentCardListeners = () => {
  */
 export const addCloseModalListener = () => {
     const modalRender = document.querySelector('#render-modal');
-    
+
     document.querySelector('.modal-close').addEventListener('click', () => {
         modalRender.classList.toggle('visible');
     });

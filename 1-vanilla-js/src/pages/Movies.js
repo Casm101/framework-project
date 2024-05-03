@@ -58,7 +58,7 @@ export class MoviesPage {
                         c.id,
                         c.title,
                         c.genre_ids.map(genreId => this.genres[genreId],),
-                        `https://image.tmdb.org/t/p/original${c.poster_path}`,
+                        `https://image.tmdb.org/t/p/w500${c.poster_path}`,
                         'movie'
                     ).render()).join('')
                 }

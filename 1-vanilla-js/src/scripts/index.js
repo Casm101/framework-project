@@ -20,7 +20,7 @@ import { FetchAnime } from "../services/FetchAnime.js";
 import { EventEmmiter } from "../utils/EventEmitter.js";
 import { getValue, setValue } from "../hooks/stateHooks.js";
 import { scrollToTop } from "../hooks/scrollToTop.js";
-import { replaceLinks, addPaginationListeners, addContentCardListeners, addSearchBarListener, addToggleButtonListner } from "../utils/EventListeners.js";
+import { replaceLinks, addContentCardListeners, addSearchBarListener, addToggleButtonListner } from "../utils/EventListeners.js";
 
 
 // Initialise event emitter
@@ -110,7 +110,7 @@ const renderContent = async (search) => {
             c.id,
             c[titleName],
             c.genre_ids.map(genreId => genres[genreId]),
-            `https://image.tmdb.org/t/p/original${c.poster_path}`,
+            `https://image.tmdb.org/t/p/w500${c.poster_path}`,
             contentType
         ).render())
     ).join('');
@@ -180,6 +180,23 @@ const renderPage = async () => {
 
     // Add content card listeners
     addContentCardListeners();
+};
+
+/**
+ * Method to add pagination listeners
+ */
+export const addPaginationListeners = () => {
+    document.querySelectorAll('.pagination-button').forEach(button => {
+        if (!button.classList.contains('disabled')) {
+            button.addEventListener('click', async (e) => {
+                let newPage = e.target.innerHTML;
+                if (newPage === 'Prev') newPage = parseInt(pageNumber) - 1;
+                if (newPage === 'Next') newPage = parseInt(pageNumber) + 1;
+                pageNumber = newPage > 500 ? 500 : newPage;
+                await renderContent(search);
+            })
+        }
+    });
 };
 
 /**
