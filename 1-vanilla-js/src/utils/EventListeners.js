@@ -108,8 +108,6 @@ export const addContentCardListeners = () => {
             if (!clickTarget.closest('.content-like')) {
                 const modalRender = document.querySelector('#render-modal');
 
-                console.log('here');
-
                 modalRender.classList.toggle('visible');
                 modalRender.innerHTML = new Modal().render();
 
@@ -123,7 +121,9 @@ export const addContentCardListeners = () => {
  * Method to add close modal listener
  */
 export const addCloseModalListener = () => {
-    document.querySelector('.close-modal')?.addEventListener('click', () => {
+    const modalRender = document.querySelector('#render-modal');
+    
+    document.querySelector('.modal-close').addEventListener('click', () => {
         modalRender.classList.toggle('visible');
     });
 };
