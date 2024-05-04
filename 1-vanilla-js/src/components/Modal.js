@@ -50,7 +50,7 @@ export class Modal {
                             Runtime
                         </p>
                         <p class="group-value">
-                            ${this.content.runtime}min
+                            ${this.content.runtime || this.content.episode_run_time[0]}min
                         </p>
                     </div>
 
@@ -59,7 +59,7 @@ export class Modal {
                             Year
                         </p>
                         <p class="group-value">
-                            ${new Date(this.content.release_date).getFullYear()}
+                            ${new Date(this.content.release_date || this.content.first_air_date).getFullYear()}
                         </p>
                     </div>
 
@@ -68,7 +68,7 @@ export class Modal {
                             Release Date
                         </p>
                         <p class="group-value">
-                            ${this.content.release_date}
+                            ${this.content.release_date || this.content.first_air_date}
                         </p>
                     </div>
 
