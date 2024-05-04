@@ -180,6 +180,9 @@ const renderPage = async () => {
 
     // Add content card listeners
     addContentCardListeners();
+
+    // Scroll to top of page
+    scrollToTop();
 };
 
 /**
