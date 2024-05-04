@@ -40,7 +40,8 @@ export const addContentCardListeners = () => {
     document.querySelectorAll('.content-card').forEach(card => {
         card.addEventListener('click', async (e) => {
             const clickTarget = e.target;
-            const contentId = clickTarget.closest('.content-card').getAttribute('content');
+            const card = clickTarget.closest('.content-card');
+            const contentId = card.getAttribute('content');
             const contentType = contentId.split('_')[0];
             const contentValue = contentId.split('_')[1];
             let existing = [];
@@ -74,6 +75,9 @@ export const addContentCardListeners = () => {
                     if (existing.includes(contentValue)) {
                         ls.removeMovie(contentValue);
                         likedButton = liked(false);
+                    };
+                    if (window.location.pathname === '/favourites') {
+                        card.remove();
                     };
 
                     clickTarget.closest('.content-like').innerHTML = likedButton;
