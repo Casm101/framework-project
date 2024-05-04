@@ -14,7 +14,15 @@ export class Modal {
         return `
             <!-- Modal component -->
             <div class="modal-background">
-                <img src="https://image.tmdb.org/t/p/w300/${this.content.backdrop_path}" alt="">
+                ${this.content.backdrop_path ?
+                    `<img
+                        class="backdrop"
+                        src="https://image.tmdb.org/t/p/w300/${this.content.backdrop_path}"
+                        alt="${this.content.title} backdrop"
+                    >`
+                    :
+                    `<div class="backdrop fallback"></div>`
+                }
                 <div class="background-overlay"></div>
                 <div class="modal-close">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -33,8 +41,18 @@ export class Modal {
                         <p>${this.content.genres.map(genre => genre.name).join(" - ")}</p>
                     </div>
                     
-                    <img src="https://image.tmdb.org/t/p/w780/${this.content.backdrop_path}" alt="${this.content.title ? this.content.title : this.content.name} poster.">
-
+                    ${this.content.backdrop_path ?
+                        `<img
+                            class="cover"
+                            src="https://image.tmdb.org/t/p/w780/${this.content.backdrop_path}"
+                            alt="${this.content.title ? this.content.title : this.content.name} poster."
+                        >`
+                        :
+                        `
+                        <div class="cover fallback">No Image Available</div>
+                        `
+                    }
+                    
                     <div class="main-description">
                         <p class="description-title">Description</p>
                         <hr>

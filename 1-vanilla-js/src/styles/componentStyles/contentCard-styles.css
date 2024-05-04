@@ -22,6 +22,17 @@
     transition: all .5s;
 }
 
+.content-card .cover.fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--text-primary);
+    background: var(--background-gradient);
+    text-align: center;
+    font-weight: 600;
+}
+
 .content-card:hover .cover {
     transform: scale(1.05);
 }

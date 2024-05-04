@@ -44,7 +44,17 @@ export class ContentCard {
                 <div class="content-like">
                     ${this.likeButton(likes.includes(this.id.toString()))}
                 </div>
-                <img class="cover" src="${this.cover}" alt="">
+
+                ${this.cover ? 
+                    `<img
+                        class="cover"
+                        src="https://image.tmdb.org/t/p/w342${this.cover}"
+                        alt="${this.title} poster"
+                    >`
+                :
+                    `<div class="cover fallback">No Image Available</div>`
+                }
+                
                 <div class="overlay">
                     <div class="overlay-title">
                         ${this.title}

@@ -37,7 +37,7 @@
 }
 
 .searchbar-styled:focus-within {
-    outline: .5px solid #9c3aba;
+    outline: .5px solid #6242a9;
 }
 
 .searchbar-styled .searchbar-input::placeholder {

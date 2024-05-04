@@ -2,6 +2,7 @@
     --background-primary: #1c1c1c;
     --background-secondary: #222222;
     --background-terciary: #262626;
+    --background-gradient: radial-gradient(at left top, #6C86BA, #6C22AF);
 
     --text-primary: #fff;
     --text-secondary: #838383;
@@ -17,6 +18,7 @@
     --background-primary: #fff;
     --background-secondary: #f1f3f6;
     --background-terciary: #eaebef;
+    --background-gradient: radial-gradient(at left top, #6C86BA, #6C22AF);
 
     --text-primary: #1c1c1c;
     --text-secondary: #838383;

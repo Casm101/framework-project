@@ -110,7 +110,7 @@ const renderContent = async (search) => {
             c.id,
             c[titleName],
             c.genre_ids.map(genreId => genres[genreId]),
-            `https://image.tmdb.org/t/p/w342${c.poster_path}`,
+            c.poster_path,
             contentType
         ).render())
     ).join('');

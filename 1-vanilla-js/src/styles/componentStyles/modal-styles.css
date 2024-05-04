@@ -11,11 +11,14 @@
     overflow: hidden;
 }
 
-.modal-background img {
+.modal-background .backdrop {
     width: 120%;
     height: 120%;
     object-fit: cover;
     filter: blur(10px) brightness(.5);
+}
+.modal-background .backdrop.fallback {
+    background: var(--background-gradient);
 }
 
 .modal-background .background-overlay {
@@ -65,10 +68,19 @@
     color: var(--text-secondary);
 }
 
-.modal .modal-main img {
+.modal .modal-main .cover {
     width: 100%;
     border-radius: .5rem;
     aspect-ratio: 16/9;
+}
+
+.modal .modal-main .cover.fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--text-primary);
+    background: var(--background-gradient);
 }
 
 .modal .modal-main .main-description {

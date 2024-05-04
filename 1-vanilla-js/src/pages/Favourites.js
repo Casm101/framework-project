@@ -49,7 +49,7 @@ export class FavouritesPage {
                         c.id,
                         c.title,
                         c.genres.map(genre => genre.name),
-                        `https://image.tmdb.org/t/p/w342${c.poster_path}`,
+                        c.poster_path,
                         'movie'
                     ).render()).join('')
                 }
@@ -59,7 +59,7 @@ export class FavouritesPage {
                         c.id,
                         c.name,
                         c.genres.map(genre => genre.name),
-                        `https://image.tmdb.org/t/p/w342${c.poster_path}`,
+                        c.poster_path,
                         'movie'
                     ).render()).join('')
                 }
