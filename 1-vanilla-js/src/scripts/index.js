@@ -121,14 +121,8 @@ const renderContent = async (search) => {
     // Re-render pagination on page
     document.querySelector('.pagination-styled').outerHTML = new Pagination(pageNumber, searchContent.total_pages > 500 ? 500 : searchContent.total_pages).render();
 
-    // Add pagination listeners
-    addPaginationListeners();
-
-    // Add content card listeners
-    addContentCardListeners();
-
-    // Scroll to top of page
-    scrollToTop();
+    // Run post render actions
+    postRenderActions();
 };
 
 /**
@@ -174,6 +168,15 @@ const renderPage = async () => {
 
     // Listen to search input and re-render content
     em.on('setValue-search', (e) => renderContent(e));
+
+    // Run post render actions
+    postRenderActions();
+};
+
+/**
+ * Method to cover post render actions
+ */
+const postRenderActions = () => {
 
     // Add pagination listeners
     addPaginationListeners();
