@@ -55,7 +55,7 @@ export class TVSeriesPage {
                         c.id,
                         c.name,
                         c.genre_ids.map(genreId => this.genres[genreId]),
-                        `https://image.tmdb.org/t/p/w500${c.poster_path}`,
+                        `https://image.tmdb.org/t/p/w342${c.poster_path}`,
                         'series'
                     ).render()).join('')
                 }

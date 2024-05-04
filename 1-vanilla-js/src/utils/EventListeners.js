@@ -124,8 +124,14 @@ export const addContentCardListeners = () => {
 export const addCloseModalListener = () => {
     const modalRender = document.querySelector('#render-modal');
 
+    // Click on close button
     document.querySelector('.modal-close').addEventListener('click', () => {
         modalRender.classList.toggle('visible');
+    });
+
+    // Click on escape key
+    document.addEventListener('keyup', (e) => {
+        if (e.code === 'Escape') modalRender.classList.remove('visible');
     });
 };
 

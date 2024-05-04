@@ -3,11 +3,18 @@
  */
 export class Modal {
 
+    content;
+
+    constructor(content) {
+        this.content = content;
+    };
+
     render() {
+
         return `
             <!-- Modal component -->
             <div class="modal-background">
-                <img src="https://image.tmdb.org/t/p/original/yrjFk8OVnwOQ5qUxbHZJYobxQra.jpg" alt="">
+                <img src="https://image.tmdb.org/t/p/w300/${this.content.backdrop_path}" alt="">
                 <div class="background-overlay"></div>
                 <div class="modal-close">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -22,19 +29,17 @@ export class Modal {
                 <div class="modal-main">
                     
                     <div class="main-header">
-                        <h1>Addams Family: Family Values</h1>
-                        <p>Family - Comedy - Horror</p>
+                        <h1>${this.content.title ? this.content.title : this.content.name}</h1>
+                        <p>${this.content.genres.map(genre => genre.name).join(" - ")}</p>
                     </div>
                     
-                    <img src="https://image.tmdb.org/t/p/original/yrjFk8OVnwOQ5qUxbHZJYobxQra.jpg" alt="">
+                    <img src="https://image.tmdb.org/t/p/w780/${this.content.backdrop_path}" alt="${this.content.title ? this.content.title : this.content.name} poster.">
 
                     <div class="main-description">
                         <p class="description-title">Description</p>
                         <hr>
                         <p class="description-content">
-                            Po is gearing up to become the spiritual leader of his Valley of Peace, but also needs someone to take his place as
-                            Dragon Warrior. As such, he will train a new kung fu practitioner for the spot and will encounter a villain called the
-                            Chameleon who conjures villains from the past.
+                            ${this.content.overview}
                         </p>
                     </div>
                 </div>
@@ -42,10 +47,57 @@ export class Modal {
                 <div class="modal-sidebar">
                     <div class="sidebar-group">
                         <p class="group-title">
+                            Runtime
+                        </p>
+                        <p class="group-value">
+                            ${this.content.runtime}min
+                        </p>
+                    </div>
+
+                    <div class="sidebar-group">
+                        <p class="group-title">
                             Year
                         </p>
                         <p class="group-value">
-                            1998
+                            ${new Date(this.content.release_date).getFullYear()}
+                        </p>
+                    </div>
+
+                    <div class="sidebar-group">
+                        <p class="group-title">
+                            Release Date
+                        </p>
+                        <p class="group-value">
+                            ${this.content.release_date}
+                        </p>
+                    </div>
+
+                    <div class="sidebar-group">
+                        <p class="group-title">
+                            Language
+                        </p>
+                        <p class="group-value uppercase">
+                            ${this.content.original_language}
+                        </p>
+                    </div>
+
+                    <div class="sidebar-group">
+                        <p class="group-title">
+                            Rating
+                        </p>
+                        <p class="group-value uppercase">
+                            ${this.content.vote_average}
+                        </p>
+                    </div>
+
+                    <div class="sidebar-group">
+                        <p class="group-title">
+                            Production
+                        </p>
+                        <p class="group-value uppercase">
+                            ${this.content.production_companies.map(pc => 
+                                pc.name
+                            ).join(' - ')}
                         </p>
                     </div>
                 </div>
