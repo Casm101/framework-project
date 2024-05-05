@@ -1,27 +1,50 @@
+// Component imports
+import { ContentCard } from "./ContentCard.js";
+
+// Service imports
+import { FetchMovies } from "../services/FetchMovies.js";
+import { FetchSeries } from "../services/FetchSeries.js";
+
 /**
  * Modal component
  */
 export class Modal {
 
     content;
+    contentType;
+    genres = [];
+    recommendations = [];
 
     constructor(content) {
         this.content = content;
     };
 
-    render() {
+    async render() {
 
+        this.contentType = this.content?.title ? 'movie' : 'series';
+        
+        if (this.contentType === 'movie') {
+            this.recommendations = await new FetchMovies().getMovieRecommendationsById(this.content.id);
+            this.genres = await new FetchMovies().getMoviesGenres();
+        };
+        if (this.contentType === 'series') {
+            this.recommendations = await new FetchSeries().getSeriesRecommendationsById(this.content.id);
+            this.genres = await new FetchSeries().getSeriesGenres();
+        };
+
+        console.log(this.recommendations.results);
+            
         return `
             <!-- Modal component -->
             <div class="modal-background">
                 ${this.content.backdrop_path ?
-                    `<img
+                `<img
                         class="backdrop"
-                        src="https://image.tmdb.org/t/p/w300/${this.content.backdrop_path}"
+                        src="https://image.tmdb.org/t/p/w300${this.content.backdrop_path}"
                         alt="${this.content.title} backdrop"
                     >`
-                    :
-                    `<div class="backdrop fallback"></div>`
+                :
+                `<div class="backdrop fallback"></div>`
                 }
                 <div class="background-overlay"></div>
                 <div class="modal-close">
@@ -59,6 +82,22 @@ export class Modal {
                         <p class="description-content">
                             ${this.content.overview}
                         </p>
+                    </div>
+
+                    <div class="main-header">
+                        <h1>Recomendations</h1>
+                        <p>Films like ${this.content.title}</p>
+                    </div>
+                    <div class="recommendations">
+                        ${this.recommendations?.results?.splice(0, 5).map(r =>
+                            new ContentCard(
+                                r.id,
+                                r.title || r.name,
+                                r.genre_ids.map(genre => this.genres[genre]),
+                                r.poster_path,
+                                this.contentType
+                            ).render()
+                        ).join('')}
                     </div>
                 </div>
 
@@ -121,5 +160,5 @@ export class Modal {
                 </div>
             </div>
         `;
-    }
-}
+    };
+};

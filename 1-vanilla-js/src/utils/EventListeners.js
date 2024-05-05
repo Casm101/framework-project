@@ -114,7 +114,7 @@ export const addContentCardListeners = () => {
                 }
 
                 modalRender.classList.toggle('visible');
-                modalRender.innerHTML = new Modal(content).render();
+                modalRender.innerHTML = await new Modal(content).render();
 
                 addCloseModalListener();
             }

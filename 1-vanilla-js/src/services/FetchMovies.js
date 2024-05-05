@@ -15,6 +15,10 @@ export class FetchMovies extends FetchContent {
         return this.getContentById('movie', id);
     };
 
+    getMovieRecommendationsById(id) {
+        return this.getRecommendationsById('movie', id);
+    };
+
     getMoviesGenres() {
         return this.getContentGenres('movie');
     };

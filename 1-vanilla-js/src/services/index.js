@@ -28,6 +28,13 @@ export class FetchContent {
             .then(data => data);
     };
 
+    async getRecommendationsById(contentType, id) {
+        contentType = this.isAnime(contentType);
+        return fetch(`${this.baseURL}${contentType}/${id}/recommendations?api_key=${this.apiKey}${this.optionalParams}`)
+            .then(response => response.json())
+            .then(data => data);
+    };
+
     async getContentGenres(contentType) {
         contentType = this.isAnime(contentType);
         return fetch(`${this.baseURL}genre/${contentType}/list?api_key=${this.apiKey}`)

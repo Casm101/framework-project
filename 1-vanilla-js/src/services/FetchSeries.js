@@ -19,6 +19,10 @@ export class FetchSeries extends FetchContent {
         return this.getContentGenres('tv');
     };
 
+    getSeriesRecommendationsById(id) {
+        return this.getRecommendationsById('tv', id);
+    };
+
     searchSeries(search, page = 1) {
         return this.searchContent('tv', search, page);
     };

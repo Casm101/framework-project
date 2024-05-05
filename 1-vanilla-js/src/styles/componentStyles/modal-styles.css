@@ -111,6 +111,15 @@
     border-color: var(--border-secondary);
 }
 
+.modal .recommendations {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: auto;
+    gap: 2rem;
+
+    height: 300px;
+}
+
 .modal .modal-sidebar {
     display: flex;
     flex-direction: column;
