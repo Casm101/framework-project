@@ -21,18 +21,16 @@ export class Modal {
 
     async render() {
 
-        this.contentType = this.content?.title ? 'movie' : 'series';
+        // this.contentType = this.content?.title ? 'movie' : 'series';
         
-        if (this.contentType === 'movie') {
-            this.recommendations = await new FetchMovies().getMovieRecommendationsById(this.content.id);
-            this.genres = await new FetchMovies().getMoviesGenres();
-        };
-        if (this.contentType === 'series') {
-            this.recommendations = await new FetchSeries().getSeriesRecommendationsById(this.content.id);
-            this.genres = await new FetchSeries().getSeriesGenres();
-        };
-
-        console.log(this.recommendations.results);
+        // if (this.contentType === 'movie') {
+        //     this.recommendations = await new FetchMovies().getMovieRecommendationsById(this.content.id);
+        //     this.genres = await new FetchMovies().getMoviesGenres();
+        // };
+        // if (this.contentType === 'series') {
+        //     this.recommendations = await new FetchSeries().getSeriesRecommendationsById(this.content.id);
+        //     this.genres = await new FetchSeries().getSeriesGenres();
+        // };
             
         return `
             <!-- Modal component -->
@@ -84,7 +82,7 @@ export class Modal {
                         </p>
                     </div>
 
-                    <div class="main-header">
+                    <!-- <div class="main-header">
                         <h1>Recomendations</h1>
                         <p>Films like ${this.content.title}</p>
                     </div>
@@ -98,7 +96,7 @@ export class Modal {
                                 this.contentType
                             ).render()
                         ).join('')}
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="modal-sidebar">
