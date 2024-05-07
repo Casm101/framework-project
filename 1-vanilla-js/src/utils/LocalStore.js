@@ -64,9 +64,25 @@ export class LocalStore {
      * @param {string} movieId
      */
     removeSeries(seriesId) {
-        console.log('here');
         const existingSeries = JSON.parse(localStorage.getItem('series'));
         const newArr = existingSeries.filter(id => id !== seriesId)
         localStorage.setItem('series', JSON.stringify(newArr));
+    };
+
+    /**
+     * Method to retrieve theme stored in local storage
+     * @returns {string | null}
+     */
+    getTheme() {
+        return JSON.parse(localStorage.getItem('theme') || null);
+    };
+
+    /**
+     * Method to store theme in local storage
+     * @param {'light' | 'dark'} value
+     * @returns {'light' | 'dark'}
+     */
+    setTheme(value) {
+        return localStorage.setItem('theme', JSON.stringify(value));
     };
 };

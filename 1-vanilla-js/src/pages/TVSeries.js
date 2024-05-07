@@ -41,7 +41,7 @@ export class TVSeriesPage {
         return `
             <div class="page-header" style="gap: 3rem">
                 ${new SearchBar('Search series').render()}
-                ${new ToggleButton().render()}
+                ${new ToggleButton(window.theme === 'light' ? true : false).render()}
             </div>
 
             <div class="page-header">

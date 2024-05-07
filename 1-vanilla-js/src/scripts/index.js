@@ -21,18 +21,22 @@ import { EventEmmiter } from "../utils/EventEmitter.js";
 import { getValue, setValue } from "../hooks/stateHooks.js";
 import { scrollToTop } from "../hooks/scrollToTop.js";
 import { replaceLinks, addContentCardListeners, addSearchBarListener, addToggleButtonListner } from "../utils/EventListeners.js";
+import { LocalStore } from "../utils/LocalStore.js"
 
 
 // Initialise event emitter
 window.getValue = getValue;
 window.setValue = setValue;
+window.getTheme = new LocalStore().getTheme;
+window.setTheme = new LocalStore().setTheme;
 window.em = new EventEmmiter();
 
 // Declare global variables
+window.theme = getTheme('theme') || 'light';
 window.search = '';
+window.pageNumber = 1;
 let content;
 let genres;
-window.pageNumber = 1;
 
 
 // Sidebar links
@@ -209,6 +213,9 @@ export const addPaginationListeners = () => {
  * Listener for page load.
  */
 window.onload = () => {
+
+    // Set initial site theme
+    if (theme === 'light') document.querySelector(':root').classList.add('light');
     
     // Render sidebar
     const sidebar = new Sidebar(sidebarLinks);

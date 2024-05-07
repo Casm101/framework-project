@@ -44,7 +44,7 @@ export class MoviesPage {
         return `
             <div class="page-header" style="gap: 3rem">
                 ${new SearchBar('Search movies').render()}
-                ${new ToggleButton().render()}
+                ${new ToggleButton(window.theme === 'light' ? true : false).render()}
             </div>
 
             <div class="page-header">

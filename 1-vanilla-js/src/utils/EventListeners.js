@@ -157,10 +157,14 @@ export const addToggleButtonListner = () => {
     toggle?.addEventListener('click', (e) => {
         const isActive = new Array(...toggle.classList).indexOf('active') !== -1;
         if (isActive) {
+            window.theme = 'dark';
+            setTheme('dark');
             document.querySelector(':root').classList.remove('light');
             return toggle.classList.remove('active');
         }
         if (!isActive) {
+            window.theme = 'light';
+            setTheme('light');
             document.querySelector(':root').classList.add('light');
             return toggle.classList.add('active');
         }
