@@ -1,0 +1,93 @@
+/* Content card styles */
+.content-card {
+    position: relative;
+
+    width: 100%;
+
+    border-radius: .5rem;
+    border: 2px solid var(--border-primary);
+
+    overflow: hidden;
+    cursor: pointer;
+    transition: all .5s;
+
+    &:hover {
+
+        border-color: var(--border-secondary);
+
+        .cover {
+            transform: scale(1.05);
+        }
+
+        .content-like {
+            opacity: 1;
+        }
+    }
+
+    .cover {
+
+        width: 100%;
+        aspect-ratio: 10.8 / 16;
+        transition: all .5s;
+
+        &.fallback {
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: var(--text-primary);
+            background: var(--background-gradient);
+            text-align: center;
+            font-weight: 600;
+        }
+    }
+
+    .content-like {
+
+        position: absolute;
+        top: .5rem;
+        right: .5rem;
+
+        z-index: 100;
+        opacity: 0;
+        transition: .5s;
+
+        svg {
+            width: 2rem;
+            color: #f1412b;
+        }
+    }
+
+    .overlay {
+
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        gap: .25rem;
+
+        position: absolute;
+
+        width: 100%;
+        height: 65px;
+        padding: 8px 16px;
+
+        color: var(--text-primary);
+        background: var(--background-secondary);
+
+        bottom: 0;
+        z-index: 100;
+
+        .overlay-title {
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .overlay-tags {
+            opacity: .5;
+            font-size: .8rem;
+        }
+    }
+}
