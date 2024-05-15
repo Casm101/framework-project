@@ -1,3 +1,4 @@
+// Module imports
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {
@@ -9,6 +10,9 @@ import {
 import Root from "./pages/index";
 import Movies from './pages/Movies';
 
+// Global style imports
+import './styles/global.scss';
+
 
 /**
  * Routing object that defines all pages
@@ -19,7 +23,7 @@ const router = createBrowserRouter([
     element: <Root />,
     children: [
       {
-        path: 'movies',
+        index: true,
         element: <Movies />
       },
       {
@@ -31,6 +35,7 @@ const router = createBrowserRouter([
     ]
   }
 ]);
+
 
 /**
  * Main react script

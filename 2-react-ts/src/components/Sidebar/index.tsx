@@ -1,3 +1,6 @@
+// Style imports
+import './styles.scss';
+
 // Interface and type declarations
 interface ILink {
     name: string;
@@ -6,15 +9,17 @@ interface ILink {
 };
 
 interface SidebarProps {
+    logo: string;
     navLinks: ILink[];
 };
 
 // Sidebar component
 export const Sidebar = ({
+    logo,
     navLinks
 }: SidebarProps) => {
 
-    const navLink = ({
+    const NavLink = ({
         name,
         href,
         icon
@@ -26,7 +31,7 @@ export const Sidebar = ({
         return (
             <a href={href} className={`navigation-link ${activeClass}`}>
                 <img src={icon} />
-                <span>${name}</span>
+                <span>{name}</span>
             </a>
         );
     };
@@ -37,13 +42,17 @@ export const Sidebar = ({
             {/* Sidebar logo */}
             <div className="sidebar-logo">
                 <a href="/">
-                    <img src="./public/logo.svg" alt="Home Page" />
+                    <img src={logo} alt="Home Page" />
                 </a>
             </div>
 
             {/* Sidebar navigation */}
             <nav className="sidebar-navigation">
-                ${navLinks.map(link => navLink(link))}
+                {navLinks &&
+                    navLinks.map((link, idx) => (
+                        <NavLink {...link} key={idx} />
+                    ))
+                }
             </nav>
 
             {/* Sidebar footer */}

@@ -1,0 +1,29 @@
+:root {
+    --background-primary: #1c1c1c;
+    --background-secondary: #222222;
+    --background-terciary: #262626;
+    --background-gradient: radial-gradient(at left top, #6C86BA, #6C22AF);
+
+    --text-primary: #fff;
+    --text-secondary: #838383;
+
+    --border-primary: #292929;
+    --border-secondary: #454545;
+    --border-terciary: #2e2e2e;
+
+    transition: color .5s ease, background .5s ease;
+}
+
+:root.light {
+    --background-primary: #fff;
+    --background-secondary: #f1f3f6;
+    --background-terciary: #eaebef;
+    --background-gradient: radial-gradient(at left top, #6C86BA, #6C22AF);
+
+    --text-primary: #1c1c1c;
+    --text-secondary: #838383;
+
+    --border-primary: #eaebef;
+    --border-secondary: #b6b7b7;
+    --border-terciary: #b6b7b7;
+}

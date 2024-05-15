@@ -1,0 +1,80 @@
+/* Genereic imports */
+@import "./reset.scss";
+@import "./theme.scss";
+
+
+/* Global styling */
+html {
+    background: var(--background-primary);
+}
+
+body {
+    width: 100%;
+    height: 100dvh;
+}
+
+
+/* Page wrapper styling */
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    width: calc(100% - 300px);
+    height: 100dvh;
+
+    margin-left: 300px;
+    padding: 2.5rem;
+}
+
+/* Modal render point */
+#render-modal {
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    position: fixed;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 9999;
+    inset: 0;
+
+    &.visible {
+        display: flex;
+    }
+}
+
+/* Page header */
+.page-header {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+
+    width: 100%;
+    font-size: 2rem;
+}
+
+.page-header .header-title {
+    color: var(--text-primary);
+}
+
+.page-header .header-sum {
+    color: var(--text-secondary);
+}
+
+
+/* Content grid */
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: auto;
+    grid-gap: 2rem;
+}
+
+
+/* Error message wrapper */
+.error-wrapper {
+    color: var(--text-primary);
+}
