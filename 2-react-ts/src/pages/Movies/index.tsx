@@ -1,11 +1,17 @@
 // Component imports
 import { ContentCard } from "../../components/ContentCard";
+import { SearchBar } from "../../components/SearchBar";
 
 
 export default function Movies() {
 
     return (
         <div className="page-wrapper">
+
+            {/* Page header */}
+            <div className="page-header" style={{ padding: '3rem' }}>
+                <SearchBar placeholder="Search Movies" />
+            </div>
 
             {/* Page header */}
             <div className="page-header">
