@@ -1,6 +1,7 @@
 // Component imports
 import { ContentCard } from "../../components/ContentCard";
 import { SearchBar } from "../../components/SearchBar";
+import { ToggleButton } from "../../components/ToggleButton";
 
 
 export default function Movies() {
@@ -9,8 +10,9 @@ export default function Movies() {
         <div className="page-wrapper">
 
             {/* Page header */}
-            <div className="page-header" style={{ padding: '3rem' }}>
+            <div className="page-header" style={{ gap: '3rem' }}>
                 <SearchBar placeholder="Search Movies" />
+                <ToggleButton isActive />
             </div>
 
             {/* Page header */}
