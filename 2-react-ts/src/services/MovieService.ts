@@ -18,7 +18,7 @@ export class MovieService extends FetchContent {
         return this.getRecommendationsById('movie', id);
     };
 
-    getMoviesGenres() {
+    getMovieGenres() {
         return this.getContentGenres('movie');
     };
 

@@ -2,9 +2,9 @@
 import './styles.scss';
 
 interface ContentCardProps {
-    id: string;
+    id: number;
     title: string;
-    tags: string[];
+    genres: string[];
     cover?: string;
     type?: string;
 }
@@ -16,13 +16,16 @@ interface LikeButtonParams {
 export const ContentCard = ({
     id,
     title,
-    tags,
+    genres,
     cover,
     type = 'movie'
 }: ContentCardProps) => {
 
     //const ls = new LocalStore();
     //const likes = [...ls.getMovies(), ...ls.getSeries()];
+
+    console.log('content card: ', genres);
+
 
     const likes: string[] = [];
 
@@ -61,7 +64,7 @@ export const ContentCard = ({
                     {title}
                 </div>
                 <div className="overlay-tags">
-                    {tags.map(tag => tag).join(' - ')}
+                    {genres.map(genre => genre).join(' - ')}
                 </div>
             </div>
         </article>

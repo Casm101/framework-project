@@ -81,7 +81,7 @@ export class FetchContent {
     public async getContentGenres(contentType: TContentType) {
         contentType = this.isAnime(contentType);
         const response = await fetch(`${this.baseUrl}genre/${contentType}/list?api_key=${this.apiKey}`);
-        const genres = await this.handleResponse(response);
+        const genres = (await this.handleResponse(response)).genres;
         return genres.reduce((obj: Record<number, string>, item: { id: number, name: string }) => {
             obj[item.id] = item.name;
             return obj;
