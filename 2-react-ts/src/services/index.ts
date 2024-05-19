@@ -1,15 +1,6 @@
 // Type declarations
 type TContentType = 'movie' | 'tv' | 'anime';
 
-// Method to handle api responses
-const handleResponse = async (response: any) => {
-    if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Data could not be retrieved');
-    }
-    return response.json();
-};
-
 
 /**
  * Base service class
@@ -32,6 +23,19 @@ export class FetchContent {
         return type;
     };
 
+    /**
+     * Method to handle TMDB responses
+     * @param response 
+     * @returns 
+     */
+    private handleResponse = async (response: any) => {
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Data could not be retrieved');
+        }
+        return response.json();
+    };
+
 
     /**
      * 
@@ -42,7 +46,7 @@ export class FetchContent {
     public async getContent(contentType: TContentType, page: number = 1) {
         contentType = this.isAnime(contentType);
         const response = await fetch(`${this.baseUrl}discover/${contentType}?api_key=${this.apiKey}${this.optionalParams}&page=${page}`);
-        return await handleResponse(response);
+        return await this.handleResponse(response);
     };
 
     /**
@@ -54,7 +58,7 @@ export class FetchContent {
     public async getContentById(contentType: TContentType, id: number) {
         contentType = this.isAnime(contentType);
         const response = await fetch(`${this.baseUrl}${contentType}/${id}?api_key=${this.apiKey}${this.optionalParams}`);
-        return await handleResponse(response);
+        return await this.handleResponse(response);
     };
 
     /**
@@ -63,10 +67,10 @@ export class FetchContent {
      * @param id 
      * @returns 
      */
-    public async getRecomendationsById(contentType: TContentType, id: number) {
+    public async getRecommendationsById(contentType: TContentType, id: number) {
         contentType = this.isAnime(contentType);
         const response = await fetch(`${this.baseUrl}${contentType}/${id}/recommendations?api_key=${this.apiKey}${this.optionalParams}`);
-        return await handleResponse(response);
+        return await this.handleResponse(response);
     };
 
     /**
@@ -77,7 +81,7 @@ export class FetchContent {
     public async getContentGenres(contentType: TContentType) {
         contentType = this.isAnime(contentType);
         const response = await fetch(`${this.baseUrl}genre/${contentType}/list?api_key=${this.apiKey}`);
-        const genres = await handleResponse(response);
+        const genres = await this.handleResponse(response);
         return genres.reduce((obj: Record<number, string>, item: { id: number, name: string }) => {
             obj[item.id] = item.name;
             return obj;
@@ -98,6 +102,6 @@ export class FetchContent {
     ) {
         contentType = this.isAnime(contentType);
         const response = await fetch(`${this.baseUrl}search/${contentType}?query=${searchQuery}&api_key=${this.apiKey}&page=${page}`);
-        return await handleResponse(response);
+        return await this.handleResponse(response);
     };
 };
