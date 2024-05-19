@@ -24,9 +24,6 @@ export const ContentCard = ({
     //const ls = new LocalStore();
     //const likes = [...ls.getMovies(), ...ls.getSeries()];
 
-    console.log('content card: ', genres);
-
-
     const likes: string[] = [];
 
     const LikeButton = ({ isLiked }: LikeButtonParams) => {
@@ -45,10 +42,13 @@ export const ContentCard = ({
 
     return (
         <article className="content-card" content={`${type}_${id}`}>
+
+            {/* Like Button */}
             <div className="content-like">
                 <LikeButton isLiked={likes.includes(id.toString())} />
             </div>
 
+            {/* Content cover or fallback */}
             {cover ?
                 <img
                     className="cover"
@@ -59,6 +59,7 @@ export const ContentCard = ({
                 <div className="cover fallback">No Image Available</div>
             }
 
+            {/* Content overlay information */}
             <div className="overlay">
                 <div className="overlay-title">
                     {title}

@@ -12,6 +12,9 @@ import { IMovie } from "../../types/movieTypes";
 // Service imports
 import { MovieService } from "../../services/MovieService";
 
+// Hook imports
+import { useDebounce } from '../../hooks/useDebounce'
+
 
 /**
  * Movie page
@@ -22,9 +25,18 @@ export default function Movies() {
     // Page state declaration
     const [movies, setMovies] = useState<IMovie[]>([]);
     const [movieGenres, setMovieGenres] = useState<string[]>([]);
+    const [searchQuery, setSearchQuery] = useState<string>('');
+    const [page, setPage] = useState<number>(1);
+
+    // Method to search and set movies
+    const searchMovies = useDebounce(async (query: string, pageQuery: number) => {
+        const searchResults = (await movieService.searchMovies(query, pageQuery)).results;
+        setMovies(await searchResults);
+    });
 
     // Init services
     const movieService = new MovieService();
+
 
     // Methods to run on page load
     useEffect(() => {
@@ -36,12 +48,20 @@ export default function Movies() {
         fetchMovies();
     }, []);
 
+    // Methods to run on search change
+    useEffect(() => {
+        if (searchQuery) searchMovies(searchQuery, page);
+    }, [searchQuery, page])
+
     return (
         <div className="page-wrapper">
 
             {/* Page header */}
             <div className="page-header" style={{ gap: '3rem' }}>
-                <SearchBar placeholder="Search Movies" />
+                <SearchBar
+                    placeholder="Search Movies"
+                    setQuery={setSearchQuery}
+                />
                 <ToggleButton isActive />
             </div>
 

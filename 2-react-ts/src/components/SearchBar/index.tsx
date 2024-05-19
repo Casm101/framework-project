@@ -3,13 +3,15 @@ import './styles.scss';
 
 interface SearchBarProps {
     placeholder: string;
+    setQuery: (val: string) => void;
 }
 
 /**
  * SearchBar component
  */
 export const SearchBar = ({
-    placeholder
+    placeholder,
+    setQuery
 }: SearchBarProps) => {
 
     /**
@@ -22,6 +24,7 @@ export const SearchBar = ({
                 type="search"
                 className="searchbar-input"
                 placeholder={placeholder}
+                onChange={(e) => setQuery(e.target.value)}
             />
             <img
                 src="/icons/search-icon.svg"
