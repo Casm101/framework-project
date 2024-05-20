@@ -9,6 +9,7 @@ import {
 // Page imports
 import Root from "./pages/index";
 import Movies from './pages/Movies';
+import Series from './pages/Series';
 
 // Global style imports
 import './styles/global.scss';
@@ -27,7 +28,8 @@ const router = createBrowserRouter([
         element: <Movies />
       },
       {
-        path: 'tv-series'
+        path: 'tv-series',
+        element: <Series />
       },
       {
         path: 'anime'
