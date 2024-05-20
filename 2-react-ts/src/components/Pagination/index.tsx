@@ -57,6 +57,7 @@ export const Pagination = ({
                 value="Prev"
                 isActive={false}
                 isDisabled={prevDisabled}
+                onClick={() => handlePage('Prev')}
                 key={'Prev'}
             />
         );
