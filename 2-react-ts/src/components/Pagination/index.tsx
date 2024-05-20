@@ -1,16 +1,19 @@
 // Style imports
+import { Dispatch, SetStateAction } from 'react';
 import './styles.scss';
 
 // Component props
 interface PaginationProps {
     page: number;
     totalPages: number;
+    handlePage: (update: number | 'Prev' | 'Next') => void;
 }
 
 interface PaginationButtonProps {
     value: number | string;
     isActive: boolean;
     isDisabled: boolean;
+    onClick?: () => void;
 }
 
 
@@ -19,13 +22,15 @@ interface PaginationButtonProps {
  */
 export const Pagination = ({
     page = 0,
-    totalPages = 0
+    totalPages = 0,
+    handlePage
 }: PaginationProps) => {
 
     const PaginationButton = ({
         value,
         isActive,
-        isDisabled
+        isDisabled,
+        onClick
     }: PaginationButtonProps) => {
 
         const activeClass = isActive ? 'active' : '';
@@ -34,6 +39,7 @@ export const Pagination = ({
         return (
             <div
                 className={['pagination-button', activeClass, disabledClass].join(' ')}
+                onClick={onClick}
             >
                 {value}
             </div>
@@ -51,6 +57,7 @@ export const Pagination = ({
                 value="Prev"
                 isActive={false}
                 isDisabled={prevDisabled}
+                key={'Prev'}
             />
         );
 
@@ -62,6 +69,8 @@ export const Pagination = ({
                         value={i}
                         isActive={isActive}
                         isDisabled={false}
+                        onClick={() => handlePage(i)}
+                        key={i}
                     />
                 );
             }
@@ -75,6 +84,8 @@ export const Pagination = ({
                         value={i}
                         isActive={isActive}
                         isDisabled={false}
+                        onClick={() => handlePage(i)}
+                        key={i}
                     />
                 );
             }
@@ -83,6 +94,7 @@ export const Pagination = ({
                     value="..."
                     isActive={false}
                     isDisabled={true}
+                    key={'...-0'}
                 />
             );
             buttons.push(
@@ -90,6 +102,8 @@ export const Pagination = ({
                     value={totalPages}
                     isActive={false}
                     isDisabled={false}
+                    onClick={() => handlePage(totalPages)}
+                    key={totalPages}
                 />
             );
         }
@@ -103,6 +117,8 @@ export const Pagination = ({
                     value={1}
                     isActive={false}
                     isDisabled={false}
+                    onClick={() => handlePage(1)}
+                    key={1}
                 />
             );
             buttons.push(
@@ -110,6 +126,7 @@ export const Pagination = ({
                     value="..."
                     isActive={false}
                     isDisabled={true}
+                    key={'...-1'}
                 />
             );
 
@@ -120,6 +137,8 @@ export const Pagination = ({
                         value={i}
                         isActive={isActive}
                         isDisabled={false}
+                        onClick={() => handlePage(i)}
+                        key={i}
                     />
                 );
             };
@@ -129,6 +148,7 @@ export const Pagination = ({
                     value="..."
                     isActive={false}
                     isDisabled={true}
+                    key={'...-2'}
                 />
             );
             buttons.push(
@@ -136,6 +156,8 @@ export const Pagination = ({
                     value={totalPages}
                     isActive={false}
                     isDisabled={false}
+                    onClick={() => handlePage(totalPages)}
+                    key={totalPages}
                 />
             );
         }
@@ -149,6 +171,8 @@ export const Pagination = ({
                     value={1}
                     isActive={false}
                     isDisabled={false}
+                    onClick={() => handlePage(1)}
+                    key={1}
                 />
             );
             buttons.push(
@@ -156,6 +180,7 @@ export const Pagination = ({
                     value="..."
                     isActive={false}
                     isDisabled={true}
+                    key={'...-3'}
                 />
             );
 
@@ -166,6 +191,8 @@ export const Pagination = ({
                         value={i}
                         isActive={isActive}
                         isDisabled={false}
+                        onClick={() => handlePage(i)}
+                        key={i}
                     />
                 );
             };
@@ -176,10 +203,12 @@ export const Pagination = ({
                 value="Next"
                 isActive={false}
                 isDisabled={nextDisabled}
+                onClick={() => handlePage("Next")}
+                key={'Next'}
             />
         );
 
-        return buttons.join('');
+        return buttons;
     };
 
     return (

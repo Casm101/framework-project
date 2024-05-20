@@ -14,6 +14,8 @@ import { MovieService } from "../../services/MovieService";
 
 // Hook imports
 import { useDebounce } from '../../hooks/useDebounce'
+import { Pagination } from "../../components/Pagination";
+import { useScrollToTop } from "../../hooks/useScrollToTop";
 
 
 /**
@@ -26,13 +28,33 @@ export default function Movies() {
     const [movies, setMovies] = useState<IMovie[]>([]);
     const [movieGenres, setMovieGenres] = useState<string[]>([]);
     const [searchQuery, setSearchQuery] = useState<string>('');
+
     const [page, setPage] = useState<number>(1);
+    const [totalPages, setTotalPages] = useState<number>(0);
+    const [totalResults, setTotalResults] = useState<number>(0);
+
 
     // Method to search and set movies
     const searchMovies = useDebounce(async (query: string, pageQuery: number) => {
-        const searchResults = (await movieService.searchMovies(query, pageQuery)).results;
-        setMovies(await searchResults);
+        let searchResults;
+
+        if (query.length !== 0) {
+            searchResults = (await movieService.searchMovies(query, pageQuery));
+        } else {
+            searchResults = (await movieService.getMovies(pageQuery));
+        }
+
+        setMovies(await searchResults.results);
+        setTotalPages(await searchResults.total_pages);
+        setTotalResults(await searchResults.total_results);
     });
+
+    // Method to handle page change
+    const handlePageChange = (update: number | 'Next' | 'Prev') => {
+        if (typeof update === 'number') setPage(update);
+        if (update === 'Next') setPage((current) => current + 1);
+        if (update === 'Prev') setPage((current) => current - 1);
+    };
 
     // Init services
     const movieService = new MovieService();
@@ -41,7 +63,10 @@ export default function Movies() {
     // Methods to run on page load
     useEffect(() => {
         const fetchMovies = async () => {
-            setMovies((await movieService.getMovies()).results);
+            const movies = await movieService.getMovies();
+            setMovies(movies.results);
+            setTotalPages(movies.total_pages);
+            setTotalResults(movies.total_results);
             setMovieGenres((await movieService.getMovieGenres()));
         };
 
@@ -50,8 +75,18 @@ export default function Movies() {
 
     // Methods to run on search change
     useEffect(() => {
-        if (searchQuery) searchMovies(searchQuery, page);
-    }, [searchQuery, page])
+        searchMovies(searchQuery, page);
+    }, [searchQuery, page]);
+
+    // Reset to first page on search update
+    useEffect(() => {
+        setPage(1);
+    }, [searchQuery])
+
+    // Scroll to top of page
+    useEffect(() => {
+        useScrollToTop();
+    }, [page]);
 
     return (
         <div className="page-wrapper">
@@ -68,7 +103,7 @@ export default function Movies() {
             {/* Page header */}
             <div className="page-header">
                 <p className="header-title">Movies</p>
-                <p className="header-sum">420</p>
+                <p className="header-sum">{totalResults}</p>
             </div>
 
             {/* Content grid */}
@@ -83,6 +118,12 @@ export default function Movies() {
                 })}
             </div>
 
+            {/* Page pagination */}
+            <Pagination
+                page={page}
+                totalPages={totalPages > 500 ? 500 : totalPages}
+                handlePage={handlePageChange}
+            />
         </div>
     );
 };

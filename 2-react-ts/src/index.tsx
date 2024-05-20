@@ -27,7 +27,10 @@ const router = createBrowserRouter([
         element: <Movies />
       },
       {
-        path: 'series'
+        path: 'tv-series'
+      },
+      {
+        path: 'anime'
       },
       {
         path: 'favourites'
