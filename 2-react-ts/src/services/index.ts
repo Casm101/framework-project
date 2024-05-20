@@ -17,7 +17,7 @@ export class FetchContent {
      */
     private isAnime(type: TContentType): TContentType {
         if (type === 'anime') {
-            this.optionalParams += '&with_genres=16&with_origin_country=JP';
+            this.optionalParams = '&with_genres=16&with_origin_country=JP';
             return 'tv'
         };
         return type;
@@ -101,7 +101,7 @@ export class FetchContent {
         page: number = 1
     ) {
         contentType = this.isAnime(contentType);
-        const response = await fetch(`${this.baseUrl}search/${contentType}?query=${searchQuery}&api_key=${this.apiKey}&page=${page}`);
+        const response = await fetch(`${this.baseUrl}search/${contentType}?query=${searchQuery}&api_key=${this.apiKey}${this.optionalParams}&page=${page}`);
         return await this.handleResponse(response);
     };
 };
