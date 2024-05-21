@@ -117,7 +117,7 @@ export default function Anime() {
             {/* Page header */}
             <div className="page-header" style={{ gap: '3rem' }}>
                 <SearchBar
-                    placeholder="Search Series"
+                    placeholder="Search anime"
                     setQuery={setSearchQuery}
                 />
                 <ToggleButton isActive />

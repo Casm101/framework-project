@@ -11,6 +11,7 @@ import Root from "./pages/index";
 import Movies from './pages/Movies';
 import Series from './pages/Series';
 import Anime from './pages/Anime';
+import Favourites from './pages/Favourites';
 
 // Global style imports
 import './styles/global.scss';
@@ -37,7 +38,8 @@ const router = createBrowserRouter([
         element: <Anime />
       },
       {
-        path: 'favourites'
+        path: 'favourites',
+        element: <Favourites />
       }
     ]
   }

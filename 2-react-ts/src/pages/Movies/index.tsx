@@ -117,7 +117,7 @@ export default function Movies() {
             {/* Page header */}
             <div className="page-header" style={{ gap: '3rem' }}>
                 <SearchBar
-                    placeholder="Search Movies"
+                    placeholder="Search movies"
                     setQuery={setSearchQuery}
                 />
                 <ToggleButton isActive />
