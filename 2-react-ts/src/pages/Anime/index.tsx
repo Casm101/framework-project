@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { ContentCard } from "../../components/ContentCard";
 import { SearchBar } from "../../components/SearchBar";
 import { ToggleButton } from "../../components/ToggleButton";
+import { Pagination } from "../../components/Pagination";
 
 // Type imports
 import { IMovie } from "../../types/movieTypes";
@@ -14,25 +15,47 @@ import { AnimeService } from "../../services/AnimeService";
 
 // Hook imports
 import { useDebounce } from '../../hooks/useDebounce'
-import { Pagination } from "../../components/Pagination";
 import { useScrollToTop } from "../../hooks/useScrollToTop";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
+
+
+// Init localStorage hook
+const [setValue, getValue] = useLocalStorage();
 
 
 /**
  * Series page
- * @returns 
+ * @returns JSX.Element
  */
 export default function Anime() {
 
-    // Page state declaration
+    // Anime state declaration
     const [anime, setAnime] = useState<IMovie[]>([]);
     const [animeGenres, setAnimeGenres] = useState<string[]>([]);
-    const [searchQuery, setSearchQuery] = useState<string>('');
+    const [likedContent, setLikedContent] = useState<number[]>(getValue('series') || []);
 
+    // Page state declaration
     const [page, setPage] = useState<number>(1);
     const [totalPages, setTotalPages] = useState<number>(0);
     const [totalResults, setTotalResults] = useState<number>(0);
 
+    // Search query state
+    const [searchQuery, setSearchQuery] = useState<string>('');
+
+
+    // Method to toggle liking content
+    const toggleLiked = (id: number) => {
+        const isLiked: number = likedContent.indexOf(id);
+        if (isLiked !== -1) {
+            const removedContent = likedContent.filter(cId => cId !== id);
+            setValue('series', removedContent);
+            setLikedContent(removedContent);
+        };
+        if (isLiked === -1) {
+            setValue('series', [...likedContent, id]);
+            setLikedContent([...likedContent, id]);
+        };
+    };
 
     // Method to search and set movies
     const searchAnime = useDebounce(async (query: string, pageQuery: number) => {
@@ -115,6 +138,8 @@ export default function Anime() {
                         title={content.name}
                         cover={content.poster_path}
                         genres={content.genre_ids.map(genId => animeGenres[genId])}
+                        handleLike={toggleLiked}
+                        isLiked={likedContent.includes(content.id)}
                     />
                 })}
             </div>
