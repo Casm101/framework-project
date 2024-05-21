@@ -26,8 +26,11 @@ export const ContentCard = ({
     isLiked
 }: ContentCardProps) => {
 
-    const likes: string[] = [];
-
+    /**
+     * LikeButton component
+     * @param {isLiked: boolean, handleClick: function} params
+     * @returns JSX.Element
+     */
     const LikeButton = ({ isLiked, handleClick }: LikeButtonParams) => {
         return (
             isLiked ? (
