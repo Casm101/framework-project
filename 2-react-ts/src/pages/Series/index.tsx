@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { ContentCard } from "../../components/ContentCard";
 import { SearchBar } from "../../components/SearchBar";
 import { ToggleButton } from "../../components/ToggleButton";
+import { Pagination } from "../../components/Pagination";
 
 // Type imports
 import { IMovie } from "../../types/movieTypes";
@@ -14,8 +15,12 @@ import { SeriesService } from "../../services/SeriesService";
 
 // Hook imports
 import { useDebounce } from '../../hooks/useDebounce'
-import { Pagination } from "../../components/Pagination";
 import { useScrollToTop } from "../../hooks/useScrollToTop";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
+
+
+// Init localStorage hook
+const [setValue, getValue] = useLocalStorage();
 
 
 /**
@@ -24,15 +29,33 @@ import { useScrollToTop } from "../../hooks/useScrollToTop";
  */
 export default function Series() {
 
-    // Page state declaration
+    // Series state declaration
     const [series, setSeries] = useState<IMovie[]>([]);
     const [seriesGenres, setSeriesGenres] = useState<string[]>([]);
-    const [searchQuery, setSearchQuery] = useState<string>('');
+    const [likedContent, setLikedContent] = useState<number[]>(getValue('series') || []);
 
+    // Page state declarations
     const [page, setPage] = useState<number>(1);
     const [totalPages, setTotalPages] = useState<number>(0);
     const [totalResults, setTotalResults] = useState<number>(0);
 
+    // Search query state
+    const [searchQuery, setSearchQuery] = useState<string>('')
+
+
+    // Method to toggle liking content
+    const toggleLiked = (id: number) => {
+        const isLiked: number = likedContent.indexOf(id);
+        if (isLiked !== -1) {
+            const removedContent = likedContent.filter(cId => cId !== id);
+            setValue('series', removedContent);
+            setLikedContent(removedContent);
+        };
+        if (isLiked === -1) {
+            setValue('series', [...likedContent, id]);
+            setLikedContent([...likedContent, id]);
+        };
+    };
 
     // Method to search and set movies
     const searchSeries = useDebounce(async (query: string, pageQuery: number) => {
@@ -115,6 +138,8 @@ export default function Series() {
                         title={content.name}
                         cover={content.poster_path}
                         genres={content.genre_ids.map(genId => seriesGenres[genId])}
+                        handleLike={toggleLiked}
+                        isLiked={likedContent.includes(content.id)}
                     />
                 })}
             </div>
