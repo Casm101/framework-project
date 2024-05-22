@@ -3,9 +3,6 @@ import { useEffect, useState } from "react";
 
 // Component imports
 import { ContentCard } from "../../components/ContentCard";
-import { SearchBar } from "../../components/SearchBar";
-import { ToggleButton } from "../../components/ToggleButton";
-import { Pagination } from "../../components/Pagination";
 
 // Type imports
 import { IMovie } from "../../types/movieTypes";
@@ -14,8 +11,6 @@ import { IMovie } from "../../types/movieTypes";
 import { MovieService } from "../../services/MovieService";
 
 // Hook imports
-import { useDebounce } from '../../hooks/useDebounce'
-import { useScrollToTop } from "../../hooks/useScrollToTop";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { SeriesService } from "../../services/SeriesService";
 
@@ -32,9 +27,7 @@ export default function Favourites() {
 
     // Movie state declaration
     const [content, setContent] = useState<IMovie[]>([]);
-    const [movieGenres, setMovieGenres] = useState<string[]>([]);
-    const [seriesGenres, setSeriesGenres] = useState<string[]>([]);
-    const [likedContent, setLikedContent] = useState<number[]>(getValue('movies') || []);
+    const [likedContent, setLikedContent] = useState<number[]>([...getValue('movies'), ...getValue('series')] || []);
 
     // Page state declarations
     const [totalResults, setTotalResults] = useState<number>(0);
@@ -64,14 +57,14 @@ export default function Favourites() {
         const fetchMovies = async () => {
 
             // Get favourite content from local storage
-            const movieIds = getValue('movies');
-            const seriesIds = getValue('series');
+            const movieIds: number[] = getValue('movies');
+            const seriesIds: number[] = getValue('series');
 
+            const fetchedMovies = await Promise.all(movieIds.map(async (id) => await movieService.getMovieById(id)));
+            const fetchedSeries = await Promise.all(seriesIds.map(async (id) => await seriesService.getSeriesById(id)));
 
-
-            setContent(() => []);
+            setContent(() => [...fetchedMovies, ...fetchedSeries]);
             setTotalResults(content.length);
-            setMovieGenres((await movieService.getMovieGenres()));
         };
 
         fetchMovies();
@@ -93,8 +86,10 @@ export default function Favourites() {
                     return <ContentCard
                         key={idx}
                         {...con}
+                        title={con.title || con.name}
+                        type={con.title ? 'movie' : 'series'}
                         cover={con.poster_path}
-                        genres={con.genre_ids.map(genId => movieGenres[genId])}
+                        genres={con.genres.map(gen => gen.name)}
                         handleLike={toggleLiked}
                         isLiked={likedContent.includes(con.id)}
                     />
