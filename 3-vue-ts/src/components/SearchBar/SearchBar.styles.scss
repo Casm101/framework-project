@@ -1,0 +1,47 @@
+/* Searchbar styles */
+.searchbar-styled {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    width: 100%;
+
+    padding: 1rem 2rem;
+
+    border-radius: .5rem;
+    border: 1px solid var(--border-terciary);
+
+    background: var(--background-terciary);
+    opacity: .8;
+
+    transition: all .2s;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    .searchbar-input {
+
+        background: none;
+        border: none;
+        outline: none;
+
+        width: 100%;
+        font-size: 1rem;
+
+        color: var(--text-primary);
+
+        appearance: textfield;
+        -webkit-appearance: textfield;
+
+        &::placeholder {
+            color: var(--text-primary);
+            opacity: .5;
+        }
+    }
+
+    &:focus-within {
+        outline: .5px solid #6242a9;
+    }
+}

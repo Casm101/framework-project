@@ -1,0 +1,31 @@
+/* Pagination button component styles */
+.pagination-button {
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+
+  color: var(--text-primary);
+  opacity: .5;
+
+  cursor: pointer;
+  transition: opacity .2s ease;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &.active {
+    background: var(--border-terciary);
+    opacity: 1;
+  }
+
+  &.disabled {
+    opacity: .2;
+    cursor: auto;
+  }
+}
