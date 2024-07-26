@@ -6,12 +6,12 @@ interface ILink {
     name: string;
     href: string;
     icon: string;
-};
+}
 
 interface SidebarProps {
     logo: string;
     navLinks: ILink[];
-};
+}
 
 // Sidebar component
 export const Sidebar = ({

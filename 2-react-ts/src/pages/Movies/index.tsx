@@ -50,11 +50,11 @@ export default function Movies() {
             const removedContent = likedContent.filter(cId => cId !== id);
             setValue('movies', removedContent);
             setLikedContent(removedContent);
-        };
+        }
         if (isLiked === -1) {
             setValue('movies', [...likedContent, id]);
             setLikedContent([...likedContent, id]);
-        };
+        }
     };
 
     // Method to search and set movies
@@ -151,4 +151,4 @@ export default function Movies() {
             />
         </div>
     );
-};
+}

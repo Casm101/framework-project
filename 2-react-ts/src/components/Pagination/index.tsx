@@ -142,7 +142,7 @@ export const Pagination = ({
                         key={i}
                     />
                 );
-            };
+            }
 
             buttons.push(
                 <PaginationButton
@@ -196,7 +196,7 @@ export const Pagination = ({
                         key={i}
                     />
                 );
-            };
+            }
         }
 
         buttons.push(
@@ -210,7 +210,7 @@ export const Pagination = ({
         );
 
         return buttons;
-    };
+    }
 
     return (
         <div className="pagination-styled">

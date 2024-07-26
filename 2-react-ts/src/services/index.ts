@@ -19,9 +19,9 @@ export class FetchContent {
         if (type === 'anime') {
             this.optionalParams = '&with_genres=16&with_origin_country=JP';
             return 'tv'
-        };
+        }
         return type;
-    };
+    }
 
     /**
      * Method to handle TMDB responses
@@ -47,7 +47,7 @@ export class FetchContent {
         contentType = this.isAnime(contentType);
         const response = await fetch(`${this.baseUrl}discover/${contentType}?api_key=${this.apiKey}${this.optionalParams}&page=${page}`);
         return await this.handleResponse(response);
-    };
+    }
 
     /**
      * 
@@ -59,7 +59,7 @@ export class FetchContent {
         contentType = this.isAnime(contentType);
         const response = await fetch(`${this.baseUrl}${contentType}/${id}?api_key=${this.apiKey}${this.optionalParams}`);
         return await this.handleResponse(response);
-    };
+    }
 
     /**
      * 
@@ -71,7 +71,7 @@ export class FetchContent {
         contentType = this.isAnime(contentType);
         const response = await fetch(`${this.baseUrl}${contentType}/${id}/recommendations?api_key=${this.apiKey}${this.optionalParams}`);
         return await this.handleResponse(response);
-    };
+    }
 
     /**
      * 
@@ -86,7 +86,7 @@ export class FetchContent {
             obj[item.id] = item.name;
             return obj;
         }, {});
-    };
+    }
 
     /**
      * 
@@ -103,5 +103,5 @@ export class FetchContent {
         contentType = this.isAnime(contentType);
         const response = await fetch(`${this.baseUrl}search/${contentType}?query=${searchQuery}&api_key=${this.apiKey}${this.optionalParams}&page=${page}`);
         return await this.handleResponse(response);
-    };
-};
+    }
+}

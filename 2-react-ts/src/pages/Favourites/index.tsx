@@ -40,11 +40,11 @@ export default function Favourites() {
             const removedContent = likedContent.filter(cId => cId !== id);
             setValue('movies', removedContent);
             setLikedContent(removedContent);
-        };
+        }
         if (isLiked === -1) {
             setValue('movies', [...likedContent, id]);
             setLikedContent([...likedContent, id]);
-        };
+        }
     };
 
     // Init services
@@ -97,4 +97,4 @@ export default function Favourites() {
             </div>
         </div>
     );
-};
+}
