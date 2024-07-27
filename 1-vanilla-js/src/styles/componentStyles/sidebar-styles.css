@@ -20,6 +20,10 @@
     padding-left: .5rem;
 }
 
+.sidebar-styled .sidebar-logo img {
+    width: 80%;
+}
+
 .sidebar-styled .sidebar-navigation {
     display: flex;
     flex-direction: column;
