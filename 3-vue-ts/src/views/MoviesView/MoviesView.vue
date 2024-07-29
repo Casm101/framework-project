@@ -4,7 +4,7 @@
     <!-- Page header -->
     <div class="page-header" :style="{ gap: '3rem' }">
       <SearchBar placeholder="Search movies" :setQuery="setSearchQuery" />
-      <ToggleButton :isActive="true" />
+      <ToggleButton :isActive="themeIsLight" @click="updateTheme" />
     </div>
 
     <!-- Page header -->
@@ -18,7 +18,7 @@
       <ContentCard
         v-for="(movie, idx) in movies" v-bind="movie" :key="idx"
         :cover="movie.poster_path"
-        :genres="movie.genre_ids.map(genId => movieGenres[genId])"
+        :genres="movie.genre_ids && movie.genre_ids.map(genId => movieGenres[genId])"
         :isLiked="likedContent.includes(movie.id)"
         :handleLike="toggleLiked"
       />

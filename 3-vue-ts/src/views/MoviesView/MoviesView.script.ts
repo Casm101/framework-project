@@ -12,8 +12,9 @@ import { useDebounce } from "@/hooks/useDebounce";
 import { useScrollToTop } from "@/hooks/useScrollToTop";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 
-// Service imports
+// Service and util imports
 import { MovieService } from "@/services/MovieService";
+import { toggleTheme } from "@/utils/toggleTheme";
 
 // Type imports
 import { IMovie, IGenre } from "@/types/movieTypes";
@@ -44,6 +45,7 @@ export default defineComponent({
     const page = ref<number>(1);
     const totalPages = ref<number>(0);
     const totalResults = ref<number>(0);
+    const themeIsLight = ref<boolean>(false);
 
     // Search state declaration
     const searchQuery = ref<string>('');
@@ -87,6 +89,12 @@ export default defineComponent({
       if (update === 'Prev') page.value -= 1;
     };
 
+    // Method to update theme
+    const updateTheme = () => {
+      const theme = toggleTheme();
+      themeIsLight.value = theme === 'light' ? true : false;
+    }
+
     // Methods to run on page load
     onMounted(async () => {
       const moviesData = await movieService.getMovies();
@@ -124,7 +132,10 @@ export default defineComponent({
       totalResults,
       setSearchQuery,
       handlePageChange,
-      toggleLiked
+      toggleLiked,
+      updateTheme,
+      toggleTheme,
+      themeIsLight
     }
   }
 });

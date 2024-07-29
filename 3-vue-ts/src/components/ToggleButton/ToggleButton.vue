@@ -1,5 +1,5 @@
 <template>
-  <div :class="`toggleButton-styled ${activeClass}`">
+  <div :class="`toggleButton-styled ${isActive ? 'active' : null}`">
     <div class="toggleButton-circle"></div>
   </div>
 </template>

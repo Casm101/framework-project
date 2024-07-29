@@ -26,8 +26,6 @@ export default defineComponent({
   },
   setup(props) {
 
-    console.log('props', JSON.stringify(props, null, 2));
-
     const buttons: IButton[] = [];
 
     const generateButtons = () => {
@@ -178,8 +176,6 @@ export default defineComponent({
     });
 
     generateButtons();
-
-    console.log('buttons', JSON.stringify(buttons, null, 2));
 
     return {
       buttons
